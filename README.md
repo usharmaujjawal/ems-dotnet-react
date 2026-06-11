@@ -1,2 +1,341 @@
-# ems-dotnet-react
-Employee Management System built with .NET Core (backend), React.js (frontend), and SQL Server (database).   Provides features for managing employees, departments, roles, and authentication with a modern full‑stack architecture.
+# EMS (Employee Management System) - .NET & React
+
+A full-stack **Employee Management System** built with a modern **Clean Architecture** pattern, featuring:
+
+- **Backend**: .NET 9.0 Web API with layered architecture
+- **Frontend**: React.js 19 + Vite
+- **Database**: SQL Server with Entity Framework Core
+- **Testing**: xUnit with Moq framework
+
+## Project Overview
+
+This is a professional full-stack application demonstrating enterprise-level architecture patterns and best practices.
+
+---
+
+## 📋 Project Structure
+
+```
+ems-dotnet-react/
+├── EmpMgmtSystem.Domain/              # Core Domain Layer
+├── EmpMgmtSystem.Application/         # Application Layer (CQRS, Services, DTOs)
+├── EmpMgmtSystem.Infra/               # Infrastructure Layer (Data Access, Repositories)
+├── EmpMgmtSystem.API/                 # Presentation Layer (Web API)
+├── EmpMgmtSystem.UI/                  # Frontend (React + Vite)
+├── tests/                              # Unit Tests
+│   ├── EmpMgmtSystem.Domain.Tests/
+│   ├── EmpMgmtSystem.Application.Tests/
+│   ├── EmpMgmtSystem.Infra.Tests/
+│   └── EmpMgmtSystem.API.Tests/
+├── DbScripts/                          # Database Scripts
+│   ├── Schema/                        # Database schema creation
+│   └── Procedures/                    # Stored procedures
+├── Documents/                          # Documentation
+└── EmpMgmtSystem.sln                  # Solution file
+```
+
+---
+
+## 🏗️ Clean Architecture Layers
+
+### 1. **Domain Layer** (EmpMgmtSystem.Domain)
+
+- **Created**: `dotnet new classlib -n EmpMgmtSystem.Domain`
+- **Purpose**: Core business logic, entities, and domain interfaces
+- **Contains**: Entities, Enums, Interfaces, ValueObjects
+- **Dependencies**: None (no external dependencies)
+- [View Domain Layer Details →](./EmpMgmtSystem.Domain/README.md)
+
+### 2. **Application Layer** (EmpMgmtSystem.Application)
+
+- **Created**: `dotnet new classlib -n EmpMgmtSystem.Application`
+- **Purpose**: Business rules, use cases, DTOs, and service contracts
+- **Contains**: DTOs, Services, Validators, Mappings, Common utilities
+- **Dependencies**: Domain layer only
+- [View Application Layer Details →](./EmpMgmtSystem.Application/README.md)
+
+### 3. **Infrastructure Layer** (EmpMgmtSystem.Infra)
+
+- **Created**: `dotnet new classlib -n EmpMgmtSystem.Infra`
+- **Purpose**: Data access, repositories, database context, and external services
+- **Contains**: DbContext, Repositories, UnitOfWork, Persistence Configurations
+- **Dependencies**: Domain + Application layers
+- [View Infrastructure Layer Details →](./EmpMgmtSystem.Infra/README.md)
+
+### 4. **API Layer** (EmpMgmtSystem.API)
+
+- **Created**: `dotnet new webapi -n EmpMgmtSystem.API`
+- **Purpose**: HTTP endpoints, controllers, middleware, and API configuration
+- **Contains**: Controllers, Middleware, Filters, Extensions, Configurations
+- **Dependencies**: All layers (Domain, Application, Infrastructure)
+- [View API Layer Details →](./EmpMgmtSystem.API/README.md)
+
+### 5. **UI Layer** (EmpMgmtSystem.UI)
+
+- **Created**: `npm create vite@latest EmpMgmtSystem.UI`
+- **Purpose**: React frontend with Vite bundler
+- **Contains**: Components, Pages, Services, Hooks, Context, Utils
+- **Technology**: React 18+, Vite, Axios
+- [View UI Layer Details →](./EmpMgmtSystem.UI/README.md)
+
+---
+
+## 🔧 Project Creation Steps
+
+### Step 1: Create Solution
+
+```bash
+dotnet new sln -n ems-dotnet-react
+cd ems-dotnet-react
+```
+
+### Step 2: Create Projects (Clean Architecture)
+
+```bash
+# Domain Layer (Core Business Logic)
+dotnet new classlib -n EmpMgmtSystem.Domain
+
+# Application Layer (Use Cases & Business Rules)
+dotnet new classlib -n EmpMgmtSystem.Application
+
+# Infrastructure Layer (Data Access & External Services)
+dotnet new classlib -n EmpMgmtSystem.Infra
+
+# API Layer (Presentation)
+dotnet new webapi -n EmpMgmtSystem.API
+```
+
+### Step 3: Add Projects to Solution
+
+```bash
+dotnet sln add EmpMgmtSystem.Domain
+dotnet sln add EmpMgmtSystem.Application
+dotnet sln add EmpMgmtSystem.Infra
+dotnet sln add EmpMgmtSystem.API
+```
+
+### Step 4: Add Project References (Dependency Graph)
+
+```bash
+# API depends on Application & Infrastructure
+dotnet add EmpMgmtSystem.API/EmpMgmtSystem.API.csproj reference EmpMgmtSystem.Application/EmpMgmtSystem.Application.csproj
+dotnet add EmpMgmtSystem.API/EmpMgmtSystem.API.csproj reference EmpMgmtSystem.Infra/EmpMgmtSystem.Infra.csproj
+
+# Application depends on Domain
+dotnet add EmpMgmtSystem.Application/EmpMgmtSystem.Application.csproj reference EmpMgmtSystem.Domain/EmpMgmtSystem.Domain.csproj
+
+# Infrastructure depends on Application & Domain
+dotnet add EmpMgmtSystem.Infra/EmpMgmtSystem.Infra.csproj reference EmpMgmtSystem.Application/EmpMgmtSystem.Application.csproj
+dotnet add EmpMgmtSystem.Infra/EmpMgmtSystem.Infra.csproj reference EmpMgmtSystem.Domain/EmpMgmtSystem.Domain.csproj
+```
+
+### Step 5: Create Testing Projects (xUnit + Moq)
+
+```bash
+# Navigate to solution root
+cd ems-dotnet-react
+mkdir tests
+cd tests
+
+# Domain tests
+dotnet new xunit -n EmpMgmtSystem.Domain.Tests
+dotnet add EmpMgmtSystem.Domain.Tests/EmpMgmtSystem.Domain.Tests.csproj reference ../EmpMgmtSystem.Domain/EmpMgmtSystem.Domain.csproj
+
+# Application tests
+dotnet new xunit -n EmpMgmtSystem.Application.Tests
+dotnet add EmpMgmtSystem.Application.Tests/EmpMgmtSystem.Application.Tests.csproj reference ../EmpMgmtSystem.Application/EmpMgmtSystem.Application.csproj
+
+# Infrastructure tests
+dotnet new xunit -n EmpMgmtSystem.Infra.Tests
+dotnet add EmpMgmtSystem.Infra.Tests/EmpMgmtSystem.Infra.Tests.csproj reference ../EmpMgmtSystem.Infra/EmpMgmtSystem.Infra.csproj
+
+# API tests
+dotnet new xunit -n EmpMgmtSystem.API.Tests
+dotnet add EmpMgmtSystem.API.Tests/EmpMgmtSystem.API.Tests.csproj reference ../EmpMgmtSystem.API/EmpMgmtSystem.API.csproj
+
+# Add test projects to solution (from root)
+cd ..
+dotnet sln add tests/EmpMgmtSystem.Domain.Tests
+dotnet sln add tests/EmpMgmtSystem.Application.Tests
+dotnet sln add tests/EmpMgmtSystem.Infra.Tests
+dotnet sln add tests/EmpMgmtSystem.API.Tests
+```
+
+### Step 6: Create React Frontend
+
+```bash
+npm create vite@latest EmpMgmtSystem.UI
+cd EmpMgmtSystem.UI
+npm install
+```
+
+---
+
+## 📁 Detailed Folder Structure
+
+### Backend Folder Structure
+
+```
+ems-dotnet-react/
+├── EmpMgmtSystem.Domain/
+│   ├── Entities/              # Domain models
+│   ├── Interfaces/            # Repository & service contracts
+│   ├── Enums/                 # Business enums
+│   └── Exceptions/            # Domain exceptions
+│
+├── EmpMgmtSystem.Application/
+│   ├── DTOs/                  # Data Transfer Objects
+│   ├── Interfaces/            # Service contracts
+│   ├── Services/              # Business logic implementation
+│   ├── Validators/            # FluentValidation
+│   ├── Mappings/              # AutoMapper profiles
+│   └── Common/                # Helpers & constants
+│
+├── EmpMgmtSystem.Infra/
+│   ├── Persistence/
+│   │   ├── Context/          # AppDbContext (EF Core)
+│   │   ├── Configurations/   # Entity configurations
+│   │   └── Migrations/       # DB migrations
+│   ├── Repositories/         # Repository implementations
+│   ├── UnitOfWork/           # UnitOfWork pattern
+│   └── Logging/              # Serilog configuration
+│
+├── EmpMgmtSystem.API/
+│   ├── Controllers/          # API endpoints
+│   ├── Middleware/           # Custom middleware
+│   ├── Filters/              # Action & exception filters
+│   ├── Configurations/       # API setup
+│   ├── Program.cs            # Startup configuration
+│   └── appsettings.json      # Configuration
+│
+└── tests/                     # All unit tests
+    ├── EmpMgmtSystem.Domain.Tests/
+    ├── EmpMgmtSystem.Application.Tests/
+    ├── EmpMgmtSystem.Infra.Tests/
+    └── EmpMgmtSystem.API.Tests/
+```
+
+### Frontend Folder Structure
+
+```
+EmpMgmtSystem.UI/
+├── public/                   # Static files
+├── src/
+│   ├── assets/              # Images, fonts, styles
+│   ├── components/          # Reusable UI components
+│   ├── pages/               # Page components
+│   ├── services/            # API calls (Axios)
+│   ├── hooks/               # Custom React hooks
+│   ├── context/             # Context API providers
+│   ├── utils/               # Helper utilities
+│   ├── store/               # State management
+│   ├── App.jsx              # Root component
+│   └── main.jsx             # Entry point
+├── index.html               # Vite entry HTML
+├── package.json
+└── vite.config.js
+```
+
+---
+
+## 🛠️ Technology Stack
+
+### Backend
+
+- **.NET Framework**: .NET 9.0
+- **ORM**: Entity Framework Core (EF Core)
+- **Testing**: xUnit + Moq
+- **Validation**: FluentValidation
+- **Mapping**: AutoMapper
+- **Logging**: Serilog
+- **Authentication**: JWT (JSON Web Tokens)
+
+### Frontend
+
+- **Framework**: React 18+
+- **Build Tool**: Vite
+- **HTTP Client**: Axios
+- **State Management**: Context API / Zustand
+- **Styling**: CSS3
+
+### Database
+
+- **Database**: SQL Server
+- **Migrations**: EF Core Code-First Migrations
+
+---
+
+## 🔗 Dependency Graph
+
+```
+┌─────────────────────────────────┐
+│    EmpMgmtSystem.API            │
+│   (Presentation Layer)          │
+└─────────────────────────────────┘
+         │         │
+         ↓         ↓
+    ┌────────┐  ┌──────────────┐
+    │  App   │  │ Infra        │
+    │ Layer  │  │ (Data Access)│
+    └────────┘  └──────────────┘
+         │         │
+         └────┬────┘
+              ↓
+    ┌─────────────────────┐
+    │ EmpMgmtSystem.Domain│
+    │  (Core/Business)    │
+    └─────────────────────┘
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- .NET 9.0 SDK or later
+- SQL Server (Express or Full)
+- Node.js 18+ and npm
+- Visual Studio Code or Visual Studio 2022+
+
+### Backend Setup
+
+```bash
+# Navigate to root
+cd ems-dotnet-react
+
+# Restore NuGet packages
+dotnet restore
+
+# Build solution
+dotnet build
+
+# Run API (starts on http://localhost:5000)
+dotnet run --project EmpMgmtSystem.API
+```
+
+### Frontend Setup
+
+```bash
+cd EmpMgmtSystem.UI
+
+# Install dependencies
+npm install
+
+# Run development server (starts on http://localhost:5173)
+npm run dev
+```
+
+### Database Setup
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see [LICENSE](./LICENSE) file for details.
+
+---
+
+## 👨‍💻 Contributing
+
+Contributions are welcome! Please follow the Clean Architecture principles and ensure all tests pass before submitting a pull request.
