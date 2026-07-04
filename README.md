@@ -231,7 +231,10 @@ dotnet add package Microsoft.EntityFrameworkCore.Design --version 9.0.0
     	If you truly want entities in Domain, you’ll need to move them manually or scaffold into Infrastructure and then refactor.
 
 
-    - Register DbContext in API
+    - Register DbContext in API (i.e in Program.cs)
+        - Whenever a controller or service asks for AppDbContext, ASP.NET Core creates one using the SQL Server connection string.
+
+        - EF Core then uses that connection string to connect to your database and run queries/migrations.
 
 ## 📁 Detailed Folder Structure
 

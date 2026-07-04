@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using EmpMgmtSystem.Infra.Persistence.Models;
+using EmpMgmtSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmpMgmtSystem.Infra.Persistence.Context;
@@ -42,10 +42,7 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<WorkLog> WorkLogs { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=EmpMgmtDB;Integrated Security=True;TrustServerCertificate=True;");
-
+    // removed OnConfiguring() since it will be injected from the IoC container
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Asset>(entity =>

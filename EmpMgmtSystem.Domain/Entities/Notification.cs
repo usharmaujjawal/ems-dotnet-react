@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EmpMgmtSystem.Infra.Persistence.Models;
+namespace EmpMgmtSystem.Domain.Entities;
 
 public partial class Notification
 {
