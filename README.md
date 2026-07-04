@@ -236,6 +236,34 @@ dotnet add package Microsoft.EntityFrameworkCore.Design --version 9.0.0
 
         - EF Core then uses that connection string to connect to your database and run queries/migrations.
 
+### Step10 : to add controller class with boiler plate code we can use the below CLI cmd
+
+```bash run at the api level
+dotnet new apicontroller -n EmployeeController -o Controllers
+```
+
+### Step11 : Follow this graph to create service and repo interfaces and classes
+
+    Controller (API Layer)
+            ↓
+    IEmployeeService (Application\Interfaces)
+            ↓
+    EmployeeService (Application\Services)
+            ↓
+    IEmployeeRepository (Domain\Interfaces)
+            ↓
+    EmployeeRepository (Infrastructure\Repositories)
+            ↓
+    AppDbContext (Infrastructure\Persistence)
+            ↓
+       Database
+
+    - Generic dotnet CLI cmds
+    	dotnet new class -n MyClass
+    	dotnet new interface -n IMyService
+    	dotnet new record -n MyRecord
+    	dotnet new struct -n MyStruct
+
 ## 📁 Detailed Folder Structure
 
 ### Backend Folder Structure
