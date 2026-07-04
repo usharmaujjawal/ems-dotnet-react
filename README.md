@@ -169,7 +169,72 @@ cd EmpMgmtSystem.UI
 npm install
 ```
 
----
+### Step 7 : Add the folders to different project based on the folder structure that we are going to use for the solution(initially we can keep only necessary folder then add as & when needed)
+
+### Step 8 : Adding packages for EFCore : Need to add those packages into Infra project
+
+```bash
+cd EmpMgmtSystem.Infra
+
+# Core EF package - mandatory
+dotnet add package Microsoft.EntityFrameworkCore --version 9.0.0
+
+# Database-specific provider(Changes based on DB) - without this we can’t connect to db.
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 9.0.0
+
+# Design package (for migrations) - In-memory testing → Design not needed
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 9.0.0
+```
+
+-- Since all the dotnet-ef related cmds are run at root level and API(webapi) is our startup project so the usoft.EFCore.Design pkg should also be installed at the API project as well
+
+- Note
+  - if getting version incompatible error while running migrations or scaffolding cmds then install compatible versions i.e check the version of EFCore compatible with .NETCore version of our application.
+  - to make sure that pkgs are installed check the
+    <ItemGroup> tag in the .csproj file of that project where pkgs are installed
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+    </ItemGroup>
+
+### Step 9 : Init - scaffolding models and DbContext
+
+    - If using DB First Approach : Need to run scaffold cmds at root level(dotnet cli cmd)
+
+        dotnet ef dbcontext scaffold "connStr" Microsoft.EntityFrameworkCore.SqlServer
+        --project MyApp.Infrastructure
+        --startup-project MyApp.API
+        --output-dir Persistence/Models
+        --context-dir Persistence/DbContext
+        --context AppDbContext
+
+
+    - If using Code First Approach : Need to run migrations cmds at root level(dotnet cli cmds)
+        # dotnet ef migrations add InitialCreate
+
+        - After creating migration we need to update the db using
+        # dotnet ef database update
+
+
+    - Notes:
+        - if getting error like : ems-dotnet-react\EmpMgmtSystem.API\bin\Debug\net9.0\EmpMgmtSystem.Infra.dll' not found.
+            - first we need to build our solution in order for the dll to be created
+            - and all the references should be correctly updated i.e API --> Infra, Application
+
+### Step 9.i After scaffolding (your responsibility)
+
+    - Move files to proper folders
+    	--output-dir Domain/Entities  We cannot give like this while scaffolding
+    	This is relative to the Infrastructure project, not the Domain project.
+    	❌ Problem: EF Core cannot scaffold directly into another project (Domain).
+
+    	It will create a folder named Domain/Entities inside Infrastructure, not inside your Domain project.
+
+    	If you truly want entities in Domain, you’ll need to move them manually or scaffold into Infrastructure and then refactor.
+
+
+    - Register DbContext in API (i.e in Program.cs)
+        - Whenever a controller or service asks for AppDbContext, ASP.NET Core creates one using the SQL Server connection string.
+
+        - EF Core then uses that connection string to connect to your database and run queries/migrations.
 
 ## 📁 Detailed Folder Structure
 
