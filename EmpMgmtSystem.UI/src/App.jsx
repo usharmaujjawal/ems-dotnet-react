@@ -1,7 +1,11 @@
+import "./assets/styles/global.css";
+
+import Login from "./pages/Auth/Login/LoginPage";
+
 function App() {
   return (
     <>
-      <h1>Basic project structure</h1>
+      <Login />
     </>
   );
 }
