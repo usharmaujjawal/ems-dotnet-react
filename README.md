@@ -236,6 +236,48 @@ dotnet add package Microsoft.EntityFrameworkCore.Design --version 9.0.0
 
         - EF Core then uses that connection string to connect to your database and run queries/migrations.
 
+### Step10 : to add controller class with boiler plate code we can use the below CLI cmd
+
+```bash run at the api level
+dotnet new apicontroller -n EmployeeController -o Controllers
+```
+
+### Step11 : Follow this graph to create service, repo interfaces and classes
+
+    Controller (API Layer)
+            ↓
+    IEmployeeService (Application\Interfaces)
+            ↓
+    EmployeeService (Application\Services)
+            ↓
+    IEmployeeRepository (Domain\Interfaces)
+            ↓
+    EmployeeRepository (Infrastructure\Repositories)
+            ↓
+    AppDbContext (Infrastructure\Persistence)
+            ↓
+       Database
+
+    - Generic dotnet CLI cmds
+    	dotnet new class -n MyClass
+    	dotnet new interface -n IMyService
+    	dotnet new record -n MyRecord
+    	dotnet new struct -n MyStruct
+
+### Step 12 : Enabling swagger
+
+```bash
+Step i : install the nugget pkg - EmpMgmtSystem.API(project since it contains the Program.cs file)
+		- and then install the version of swashbuckle compatible with .NET Version
+	    dotnet add package Swashbuckle.AspNetCore --version 6.5.0  # compatible with .NET6/7/8
+
+Step ii : Configure in Program.cs
+
+Note:
+    - DotNetCore WebAPI comes with prebuilt configuration for OpenAPI specification i.e json based API specification and can be accessed via : https://localhost:{port}/openapi/v1.json
+    - to enable swagger UI we need to follow above steps
+```
+
 ## 📁 Detailed Folder Structure
 
 ### Backend Folder Structure
