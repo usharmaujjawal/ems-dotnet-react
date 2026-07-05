@@ -431,6 +431,9 @@ npm install
 
 # Run development server (starts on http://localhost:5173)
 npm run dev
+
+# During development we can use
+dotnet watch run # Hot reload enabled(Changes will reflect without restarting the application). Cltr + R to restart
 ```
 
 ### Database Setup

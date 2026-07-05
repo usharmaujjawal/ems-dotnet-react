@@ -26,7 +26,18 @@ namespace EmpMgmtSystem.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginDto dto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var userData = await _authService.LoginAsync(dto);
+
+                if (userData == null) return Ok(new { message = "Login failed for the user" });
+
+                return Ok(userData);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
         }
 
         [HttpPost]
