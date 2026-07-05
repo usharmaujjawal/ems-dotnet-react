@@ -242,7 +242,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Design --version 9.0.0
 dotnet new apicontroller -n EmployeeController -o Controllers
 ```
 
-### Step11 : Follow this graph to create service and repo interfaces and classes
+### Step11 : Follow this graph to create service, repo interfaces and classes
 
     Controller (API Layer)
             ↓
@@ -263,6 +263,20 @@ dotnet new apicontroller -n EmployeeController -o Controllers
     	dotnet new interface -n IMyService
     	dotnet new record -n MyRecord
     	dotnet new struct -n MyStruct
+
+### Step 12 : Enabling swagger
+
+```bash
+Step i : install the nugget pkg - EmpMgmtSystem.API(project since it contains the Program.cs file)
+		- and then install the version of swashbuckle compatible with .NET Version
+	    dotnet add package Swashbuckle.AspNetCore --version 6.5.0  # compatible with .NET6/7/8
+
+Step ii : Configure in Program.cs
+
+Note:
+    - DotNetCore WebAPI comes with prebuilt configuration for OpenAPI specification i.e json based API specification and can be accessed via : https://localhost:{port}/openapi/v1.json
+    - to enable swagger UI we need to follow above steps
+```
 
 ## 📁 Detailed Folder Structure
 
