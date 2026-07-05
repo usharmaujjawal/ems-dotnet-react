@@ -1,6 +1,8 @@
-﻿using EmpMgmtSystem.Domain;
+﻿using EmpMgmtSystem.Domain.Interfaces;
+using EmpMgmtSystem.Application.Interfaces;
+using EmpMgmtSystem.Application.DTOs;
 
-namespace EmpMgmtSystem.Application;
+namespace EmpMgmtSystem.Application.Services;
 
 public class EmployeeService : IEmployeeService
 {

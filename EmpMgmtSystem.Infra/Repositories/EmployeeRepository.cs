@@ -1,9 +1,9 @@
-﻿using EmpMgmtSystem.Domain;
+﻿using EmpMgmtSystem.Domain.Interfaces;
 using EmpMgmtSystem.Domain.Entities;
 using EmpMgmtSystem.Infra.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmpMgmtSystem.Infra;
+namespace EmpMgmtSystem.Infra.Repositories;
 
 public class EmployeeRepository(AppDbContext context) : IEmployeeRepository
 {

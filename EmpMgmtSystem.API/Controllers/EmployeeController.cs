@@ -1,8 +1,8 @@
-using EmpMgmtSystem.Application;
+using EmpMgmtSystem.Application.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyApp.Namespace // this is block level namespace
+namespace EmpMgmtSystem.API.Controllers// this is block level namespace
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

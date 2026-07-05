@@ -1,6 +1,7 @@
-using EmpMgmtSystem.Application;
-using EmpMgmtSystem.Domain;
-using EmpMgmtSystem.Infra;
+using EmpMgmtSystem.Application.Interfaces;
+using EmpMgmtSystem.Application.Services;
+using EmpMgmtSystem.Domain.Interfaces;
+using EmpMgmtSystem.Infra.Repositories;
 using EmpMgmtSystem.Infra.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,8 @@ builder.Services.AddControllers();
 // Step iii: Adding all other Services into IoC container 
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 
 // Step iv : Enabling Swagger/OpenAPI support for the API project 
