@@ -29,6 +29,22 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Step v : Setting up CORS(Cross Origin Resource Sharing)
+
+// v.a : getting origins(domains on which our UI will be running) from the configuration file using Binder pattern(fetch & then bind the configurations to a strongly typed type),instead of hardcoding into the program.cs  file
+
+var allowedOrigins = builder.Configuration.GetSection("CORS:AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
+
+
+builder.Services.AddCors(options =>
+{
+    // Named policy : We have to add the dev,qa,stage,uat prod env details as and when they are available
+    options.AddPolicy("AllowFrontend", policy =>
+        policy.WithOrigins(allowedOrigins)
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 
 var app = builder.Build();
 
@@ -41,6 +57,8 @@ if (app.Environment.IsDevelopment())
 } // Swagger is only preferred for dev env 
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend");
 
 // Map all controller endpoints (routes) into the request pipeline.
 app.MapControllers();
