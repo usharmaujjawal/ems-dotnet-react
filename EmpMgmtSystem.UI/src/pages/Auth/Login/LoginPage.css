@@ -64,6 +64,11 @@
   align-self: flex-end;
 }
 
+.form-field--forgetPwd {
+  color: var(--color-text-link);
+  cursor: pointer;
+}
+
 .form--btn {
   border: 1px solid grey;
   border-radius: var(--radius-primary);

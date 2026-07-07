@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../../../utils/constants";
 import "./LoginPage.css";
 import { useState } from "react";
 
@@ -6,7 +7,7 @@ export default function Login() {
   const [pwd, setPwd] = useState("");
   const [error, setError] = useState({});
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newError = {};
     if (email === "") {
@@ -19,10 +20,39 @@ export default function Login() {
     setError(newError);
 
     // call the submit logic only if we do not have any validation error
+    if (Object.keys(newError).length === 0) {
+      const loginUri = API_BASE_URL + "/api/Auth/Login";
+      try {
+        // calling the login api to validate the credentials
+        const resp = await fetch(loginUri, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            emailId: email,
+            password: pwd,
+          }),
+        });
+
+        if (!resp.Ok) {
+          setError({ error: "Login failed for the user" });
+          return;
+        }
+
+        const userData = resp.json();
+
+        console.log(userData);
+      } catch (err) {
+        setError({ error: err.message });
+      }
+    }
   };
 
   const handleSSO = () => {
     console.log("SSO handler called");
+  };
+
+  const handleForgetPwd = () => {
+    console.log("forget password handler called");
   };
 
   return (
@@ -73,7 +103,9 @@ export default function Login() {
                 </div>
               )}
             </div>
-            <div className="form-field--forgetPwd">Forgot password ?</div>
+            <div className="form-field--forgetPwd" onClick={handleForgetPwd}>
+              Forgot password ?
+            </div>
             {/* type="submit" triggers the handler attached to form  */}
             <button className="form--btn" type="submit">
               Sign in

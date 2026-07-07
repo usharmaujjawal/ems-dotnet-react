@@ -24,6 +24,7 @@ body {
   --color-text-primary: #141413;
   --color-text-secondary: #3d3d3a;
   --color-text-error: #d32f2f;
+  --color-text-link: #2563eb; /* classic blue */
 
   --color-white: #fff;
 
