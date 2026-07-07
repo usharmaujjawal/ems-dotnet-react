@@ -104,3 +104,9 @@
 .line-break::after {
   margin-left: 0.75rem; /* spacing after text */
 }
+
+.error-msg {
+  color: var(--color-text-error);
+  font-weight: 600;
+  font-size: 1.05rem;
+}

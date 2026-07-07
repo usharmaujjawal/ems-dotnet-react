@@ -1,12 +1,36 @@
 import "./LoginPage.css";
+import { useState } from "react";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [error, setError] = useState({});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newError = {};
+    if (email === "") {
+      newError.email = "Email is mandatory. Please provide the email";
+    }
+    if (pwd === "") {
+      newError.password = "Password is mandatory. Please provide the password.";
+    }
+
+    setError(newError);
+
+    // call the submit logic only if we do not have any validation error
+  };
+
+  const handleSSO = () => {
+    console.log("SSO handler called");
+  };
+
   return (
     <div>
       <div className="login-page-container">
-        <div className="container--left">LeftSide</div>
+        <div className="container--left"></div>
         <div className="container--right">
-          <div className="right--form">
+          <form className="right--form" onSubmit={(e) => handleSubmit(e)}>
             <div>
               <div className="form-title--primary">Sign in to your account</div>
               <div className="form-title--secondary">
@@ -14,30 +38,54 @@ export default function Login() {
               </div>
             </div>
             <div className="form--fields">
-              <label htmlFor="email">Work email</label>
+              <label htmlFor="email">
+                Work email<span>*</span>
+              </label>
               <input
                 className="form-input"
                 id="email"
-                type="text"
+                type="email"
                 placeholder="Enter your work email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               ></input>
+              {!email && (
+                <div className="error-msg" aria-live="polite">
+                  {error.email}
+                </div>
+              )}
             </div>
             <div className="form--fields">
-              <label htmlFor="pwd">Password</label>
+              <label htmlFor="pwd">
+                Password<span>*</span>
+              </label>
               <input
                 className="form-input"
                 id="pwd"
                 type="password"
+                value={pwd}
+                onChange={(e) => setPwd(e.target.value)}
                 placeholder="Enter your password"
               ></input>
+              {!pwd && (
+                <div className="error-msg" aria-live="polite">
+                  {error.password}
+                </div>
+              )}
             </div>
             <div className="form-field--forgetPwd">Forgot password ?</div>
-            <button className="form--btn">Sign in</button>
+            {/* type="submit" triggers the handler attached to form  */}
+            <button className="form--btn" type="submit">
+              Sign in
+            </button>
             <div className="line-break">
               <span>or</span>
             </div>
-            <button className="form--btn">Continue with SSO</button>
-          </div>
+            {/* type="button" does not trigger the form submission automatically */}
+            <button className="form--btn" type="button" onClick={handleSSO}>
+              Continue with SSO
+            </button>
+          </form>
         </div>
       </div>
     </div>

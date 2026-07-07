@@ -23,11 +23,15 @@ body {
 
   --color-text-primary: #141413;
   --color-text-secondary: #3d3d3a;
+  --color-text-error: #d32f2f;
 
   --color-white: #fff;
 
   --font-family-primary: "Courier New", Courier, monospace;
 
+  --font-weight-nm: 400; /* normal */
+  --font-weight-bd: 700; /* bold */
+  --font-weight-xbd: 900; /* extra bold */
   --radius-primary: 8px;
   --radius-secondary: 5px;
 }
