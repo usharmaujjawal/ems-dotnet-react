@@ -278,6 +278,23 @@ Note:
     - to enable swagger UI we need to follow above steps
 ```
 
+### Step 13 : Enabling JWT Authentication
+
+    - a : Install the pkg into the API project: gives the middleware to validate JWTs automatically.
+        dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 9.0.1 // compatible with .NET 9
+
+    - b : Add Audience, Issuer, Expiration into the appsettings.json file & secrete_key into env variables or users_secrete
+
+    - c : Enable jwt validation into the Program.cs file by defining all the configurations(what needs to be validated etc)
+
+    - d : Add Respective methods GenerateToken, GenerateRefreshToken etc into the JwtService
+
+### Notes
+
+    - In order to access IConfigurations from projects other than WebAPI(available by default in Controllers and other files) eg: A classlib, we need to install the below package
+
+        dotnet add package Microsoft.Extensions.Configuration.Abstractions
+
 ## 📁 Detailed Folder Structure
 
 ### Backend Folder Structure

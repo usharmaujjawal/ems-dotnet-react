@@ -4,6 +4,9 @@ using EmpMgmtSystem.Domain.Interfaces;
 using EmpMgmtSystem.Infra.Repositories;
 using EmpMgmtSystem.Infra.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +49,43 @@ builder.Services.AddCors(options =>
 });
 
 
+// Step vi : Add the JWT authentication scheme in the ConfigureServices method & define Token Validation Parameters.
+
+// vi.a : fetching jwt configuration from appsettings.json 
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+
+// For local/dev envs, it’s fine to keep a dummy Secret_Key inside appsettings.json. But for prod, we should always externalize it (env vars, user secrets, or a vault like Azure Key Vault).
+var secret_key = jwtSettings.GetValue<string>("Secret_Key") ?? throw new InvalidOperationException("JWT Secret_Key is missing!"); // fail-fast check for secret_key 
+
+// by default the DefaultAuthenticateSchema is CookiesAuthentication(for MVC controller) so we need to change this to JWT for WebAPI 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidIssuer = jwtSettings["Issuer"],
+
+        ValidateAudience = true,
+        ValidAudience = jwtSettings.GetValue<string>("Audience"),
+
+        ValidateLifetime = true,
+
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret_key)),
+
+        ClockSkew = TimeSpan.Zero // by default 5‑minute clock skew i.e for a grace period of 5 minutes our token will still remain valid even though it has crossed the EXPIRATION_MINUTES. (TimeZone.Zero) Removes the default 5‑minute grace period. Token expiration is enforced exactly at the exp claim time.
+    };
+});
+
+
+builder.Services.AddAuthorization(options => { });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -59,6 +99,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowFrontend");
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 // Map all controller endpoints (routes) into the request pipeline.
 app.MapControllers();
