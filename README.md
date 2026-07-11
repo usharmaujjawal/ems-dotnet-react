@@ -287,7 +287,16 @@ Note:
 
     - c : Enable jwt validation into the Program.cs file by defining all the configurations(what needs to be validated etc)
 
-    - d : Add Respective methods GenerateToken, GenerateRefreshToken etc into the JwtService
+### step 14 : Added logic for Token Generation into TokenService
+
+    - In order to access IConfiguration into Service(a class library), we need to install these below package(version 9.0.0 is compatible with .net9).
+        dotnet add package Microsoft.Extensions.Configuration.Abstractions --version 9.0.0
+        dotnet add package Microsoft.Extensions.Configuration.Binder --version 9.0.0 // this is required to use GetValue<T>()
+
+    - We don’t need to install all packages in the Web API project — JwtBearer is sufficient.
+    	-But we do need to install IdentityModel packages in our Application project if we’re generating tokens there
+            dotnet add package System.IdentityModel.Tokens.Jwt
+            dotnet add package Microsoft.IdentityModel.Tokens
 
 ### Notes
 

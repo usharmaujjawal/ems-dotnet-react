@@ -4,9 +4,10 @@ using EmpMgmtSystem.Domain.Interfaces;
 
 namespace EmpMgmtSystem.Application.Services;
 
-public class AuthService(IAuthRepository authRepo) : IAuthService
+public class AuthService(IAuthRepository authRepo, ITokenService tokenService) : IAuthService
 {
     private readonly IAuthRepository _authRepo = authRepo;
+    private readonly ITokenService _tokenService = tokenService;
     public async Task<AuthResponseDto> LoginAsync(LoginDto dto)
     {
         // step i : check whether emailId exists or not 
@@ -21,6 +22,10 @@ public class AuthService(IAuthRepository authRepo) : IAuthService
                 ErrorMessage = "Password does not matches"
             };
         }
+
+        // generating tokens 
+        TokenResult tokenResult = _tokenService.GenerateTokens(emp);
+
         return new AuthResponseDto
         {
             EmployeeFirstName = emp.FirstName,
@@ -29,7 +34,10 @@ public class AuthService(IAuthRepository authRepo) : IAuthService
             EmployeeRoleId = emp.RoleId,
             EmployeeEmail = emp.Email,
             ProfilePicUrl = emp.ProfilePicUrl,
-            IsSuccess = true
+            IsSuccess = true,
+            // tokens
+            AccessToken = tokenResult.AccessToken,
+            AccessTokenExpiration = tokenResult.AccessTokenExpiration
         };
     }
     public async Task<bool> ForgotPasswordAsync(string email)

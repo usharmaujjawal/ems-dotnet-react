@@ -26,7 +26,7 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 // Step iv : Enabling Swagger/OpenAPI support for the API project 
 builder.Services.AddEndpointsApiExplorer();

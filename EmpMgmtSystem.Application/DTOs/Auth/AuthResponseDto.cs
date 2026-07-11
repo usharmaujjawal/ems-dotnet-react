@@ -11,4 +11,8 @@ public class AuthResponseDto
 
     public bool IsSuccess { get; set; }
     public string? ErrorMessage { get; set; }
+
+    // Tokens
+    public string AccessToken { get; set; }
+    public DateTime AccessTokenExpiration { get; set; }
 }
