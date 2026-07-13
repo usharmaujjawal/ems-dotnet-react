@@ -21,7 +21,8 @@ public class AuthService(IAuthRepository authRepo, ITokenService tokenService, I
 
         if (emp == null) return null;
 
-        if (dto.Password != emp.PasswordHash)
+        // comparing password from the request with the hashed password
+        if (!BCrypt.Net.BCrypt.Verify(dto.Password, emp.PasswordHash))
         {
             return new AuthResponseDto
             {
