@@ -3,17 +3,17 @@ using EmpMgmtSystem.Application.DTOs;
 using EmpMgmtSystem.Domain.Interfaces;
 using EmpMgmtSystem.Infra;
 using EmpMgmtSystem.Domain.Entities;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EmpMgmtSystem.Application.Services;
 
-public class AuthService(IAuthRepository authRepo, ITokenService tokenService, IRefreshTokenRepository refreshTokenRepo, IEmployeeRepository employeeRepo) : IAuthService
+public class AuthService(IAuthRepository authRepo, ITokenService tokenService, IRefreshTokenRepository refreshTokenRepo, IEmployeeRepository employeeRepo, IRefreshTokenService refreshTokenService) : IAuthService
 {
     private readonly IAuthRepository _authRepo = authRepo;
     private readonly ITokenService _tokenService = tokenService;
-
     private readonly IEmployeeRepository _employeeRepo = employeeRepo;
-
     private readonly IRefreshTokenRepository _refreshTokenRepo = refreshTokenRepo;
+    private readonly IRefreshTokenService _refreshTokenService = refreshTokenService;
     public async Task<AuthResponseDto> LoginAsync(LoginDto dto)
     {
         // step i : check whether emailId exists or not 
@@ -26,7 +26,7 @@ public class AuthService(IAuthRepository authRepo, ITokenService tokenService, I
         {
             return new AuthResponseDto
             {
-                ErrorMessage = "Password does not matches"
+                ErrorMessage = "Invalid credentials"
             };
         }
 
@@ -65,33 +65,19 @@ public class AuthService(IAuthRepository authRepo, ITokenService tokenService, I
     public async Task<TokenResult> RefreshTokenAsync(string refreshToken)
     {
         // Step i : Validate refreshToken
-        RefreshToken? dbStoredRefreshToken = await _refreshTokenRepo.GetByTokenAsync(refreshToken);
+        ValidateRefreshTokenResult validateTokenResult = await _refreshTokenService.ValidateRefreshTokenResultAsync(refreshToken);
 
-        if (dbStoredRefreshToken == null)
+        if (validateTokenResult == null || validateTokenResult.RefreshToken == null)
             throw new UnauthorizedAccessException("Invalid token");
 
-        // Step iii : fetch the emp based on the refreshToken
-        Employee? emp = await _employeeRepo.GetEmployeeById(dbStoredRefreshToken.EmpId);
+        // Step ii : fetch the emp based on the refreshToken
+        Employee? emp = await _employeeRepo.GetEmployeeByIdAsync(validateTokenResult.RefreshToken.EmpId);
 
-        // Step ii : generate new tokens 
+        // Step iii : generate new tokens 
         TokenResult newTokenResult = _tokenService.GenerateTokens(emp);
 
-        // Step iii : Need to update the refreshToken table 
-        // RefreshToken newRefreshToken = new RefreshToken
-        // {
-        //     EmpId = emp.EmpId,
-        //     Token = newTokenResult.RefreshToken,
-        //     CreatedByIp = "IP Of the system",
-        //     CreatedAt = DateTime.UtcNow,
-        //     ExpiresAt = newTokenResult.RefreshTokenExpiration
-        // };
-
-        dbStoredRefreshToken.CreatedAt = DateTime.UtcNow;
-        dbStoredRefreshToken.Token = newTokenResult.RefreshToken;
-        dbStoredRefreshToken.ExpiresAt = newTokenResult.RefreshTokenExpiration;
-
-        // We need to use the same object that is being retrieved from db. if we pass a new object EFCore will insert that object instead of updating the existing one
-        await _refreshTokenRepo.UpdateAsync(dbStoredRefreshToken);
+        // Step iv : Rotating refresh token since we have generated new tokens
+        await _refreshTokenService.RotateRefreshTokenAsync(validateTokenResult.RefreshToken, newTokenResult);
 
         return newTokenResult;
     }

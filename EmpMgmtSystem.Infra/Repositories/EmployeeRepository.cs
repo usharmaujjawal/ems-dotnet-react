@@ -9,7 +9,7 @@ public class EmployeeRepository(AppDbContext dbContext) : IEmployeeRepository
 {
     private readonly AppDbContext _dbContext = dbContext;
 
-    public Task<Employee?> GetEmployeeById(int empId)
+    public Task<Employee?> GetEmployeeByIdAsync(int empId)
     {
         return _dbContext.Employees.FirstOrDefaultAsync(emp => emp.EmpId == empId);
     }

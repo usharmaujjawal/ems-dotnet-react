@@ -4,5 +4,5 @@ namespace EmpMgmtSystem.Domain.Interfaces;
 
 public interface IEmployeeRepository
 {
-    Task<Employee?> GetEmployeeById(int empId);
+    Task<Employee?> GetEmployeeByIdAsync(int empId);
 }

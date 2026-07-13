@@ -15,7 +15,6 @@ public class TokenService(IConfiguration configuration) : ITokenService
 
     private readonly IConfiguration _configuration = configuration;
 
-
     public TokenResult GenerateTokens(Employee employee)
     {
         TokenResult accessToken = GenerateAccessToken(employee);
