@@ -28,7 +28,7 @@ namespace EmpMgmtSystem.API.Controllers
         {
             try
             {
-                var userData = await _authService.LoginAsync(dto);
+                AuthResponseDto userData = await _authService.LoginAsync(dto);
 
                 if (userData == null) return Ok(new { message = "Login failed for the user" });
 

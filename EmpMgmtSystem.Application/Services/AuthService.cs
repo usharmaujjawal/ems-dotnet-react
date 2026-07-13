@@ -17,7 +17,7 @@ public class AuthService(IAuthRepository authRepo, ITokenService tokenService, I
     public async Task<AuthResponseDto> LoginAsync(LoginDto dto)
     {
         // step i : check whether emailId exists or not 
-        var emp = await _authRepo.GetByEmailAsync(dto.EmailId);
+        Employee? emp = await _authRepo.GetByEmailAsync(dto.EmailId);
 
         if (emp == null) return null;
 

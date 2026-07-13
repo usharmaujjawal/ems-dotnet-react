@@ -17,7 +17,7 @@ public class RoleService(IRoleRepository roleRepo) : IRoleService
 
         if (roles == null) return null;
 
-        foreach (var role in roles)
+        foreach (Role role in roles)
         {
             result.Add(new RoleDto
             {

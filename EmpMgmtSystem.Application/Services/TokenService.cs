@@ -32,7 +32,7 @@ public class TokenService(IConfiguration configuration) : ITokenService
     }
     public TokenResult GenerateAccessToken(Employee employee)
     {
-        var jwtSettings = _configuration.GetSection("Jwt");
+        IConfigurationSection jwtSettings = _configuration.GetSection("Jwt");
 
         string secret_Key = jwtSettings.GetValue<string>("Secret_Key") ?? throw new InvalidOperationException("JWT Secret_Key is missing!");
 
@@ -83,7 +83,7 @@ public class TokenService(IConfiguration configuration) : ITokenService
     public TokenResult GenerateRefreshToken()
     {
         Byte[] bytes = new byte[64];
-        var randomNumberGenerator = RandomNumberGenerator.Create();
+        RandomNumberGenerator randomNumberGenerator = RandomNumberGenerator.Create();
         randomNumberGenerator.GetBytes(bytes);
         string refreshToken = Convert.ToBase64String(bytes);
 
