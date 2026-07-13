@@ -5,7 +5,7 @@ using EmpMgmtSystem.Application.DTOs;
 
 namespace EmpMgmtSystem.API.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -17,13 +17,13 @@ namespace EmpMgmtSystem.API.Controllers
             _authService = authService;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
             throw new NotImplementedException();
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
             try
@@ -40,7 +40,7 @@ namespace EmpMgmtSystem.API.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken(RefreshRequestDto refreshRequestDto)
         {
             if (refreshRequestDto == null || string.IsNullOrEmpty(refreshRequestDto.RefreshToken))
@@ -58,7 +58,7 @@ namespace EmpMgmtSystem.API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
         {
             throw new NotImplementedException();

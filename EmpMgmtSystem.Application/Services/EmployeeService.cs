@@ -14,24 +14,4 @@ public class EmployeeService : IEmployeeService
         _empRepo = empRepo;
     }
 
-    public async Task<List<RoleDto>> GetAllRoles()
-    {
-        List<RoleDto> result = new List<RoleDto>();
-
-        var roles = await _empRepo.GetRolesAsync();
-
-        if (roles == null) return null;
-
-        foreach (var role in roles)
-        {
-            result.Add(new RoleDto
-            {
-                RoleId = role.RoleId,
-                RoleName = role.RoleName,
-                RoleLevel = role.RoleLevel
-            });
-        }
-
-        return result;
-    }
 }

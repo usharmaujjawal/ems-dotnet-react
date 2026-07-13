@@ -13,11 +13,4 @@ public class EmployeeRepository(AppDbContext dbContext) : IEmployeeRepository
     {
         return _dbContext.Employees.FirstOrDefaultAsync(emp => emp.EmpId == empId);
     }
-
-    public Task<List<Role>> GetRolesAsync()
-    {
-        // this will actually call the dbContext to fetch all the roles from db via Roles DbSet property
-        return _dbContext.Roles.ToListAsync();
-    }
-
 }

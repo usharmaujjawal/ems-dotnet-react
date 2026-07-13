@@ -3,6 +3,7 @@ using EmpMgmtSystem.Domain.Entities;
 
 namespace EmpMgmtSystem.Application.Interfaces;
 
-public interface IEmployeeService
+public interface IRoleService
 {
+    Task<List<RoleDto>> GetAllRolesAsync();
 }

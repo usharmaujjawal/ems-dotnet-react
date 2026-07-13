@@ -2,7 +2,7 @@
 
 namespace EmpMgmtSystem.Domain.Interfaces;
 
-public interface IEmployeeRepository
+public interface IRoleRepository
 {
-    Task<Employee?> GetEmployeeById(int empId);
+    Task<List<Role>> GetAllAsync();
 }
