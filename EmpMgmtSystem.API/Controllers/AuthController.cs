@@ -41,6 +41,24 @@ namespace EmpMgmtSystem.API.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> RefreshToken(RefreshRequestDto refreshRequestDto)
+        {
+            if (refreshRequestDto == null || string.IsNullOrEmpty(refreshRequestDto.RefreshToken))
+                return Unauthorized(new { message = "Invalid refresh token" });
+
+            try
+            {
+                TokenResult newToken = await _authService.RefreshTokenAsync(refreshRequestDto.RefreshToken);
+                return Ok(newToken);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+
+        }
+
+        [HttpPost]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
         {
             throw new NotImplementedException();

@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using EmpMgmtSystem.Application.DTOs;
 using EmpMgmtSystem.Application.Interfaces;
@@ -19,10 +20,14 @@ public class TokenService(IConfiguration configuration) : ITokenService
     {
         TokenResult accessToken = GenerateAccessToken(employee);
 
+        TokenResult refreshToken = GenerateRefreshToken();
+
         return new TokenResult
         {
             AccessToken = accessToken.AccessToken,
-            AccessTokenExpiration = accessToken.AccessTokenExpiration
+            AccessTokenExpiration = accessToken.AccessTokenExpiration,
+            RefreshToken = refreshToken.RefreshToken,
+            RefreshTokenExpiration = refreshToken.RefreshTokenExpiration
         };
     }
     public TokenResult GenerateAccessToken(Employee employee)
@@ -75,5 +80,22 @@ public class TokenService(IConfiguration configuration) : ITokenService
             AccessTokenExpiration = accessTokenExpiration
         };
     }
+    public TokenResult GenerateRefreshToken()
+    {
+        Byte[] bytes = new byte[64];
+        var randomNumberGenerator = RandomNumberGenerator.Create();
+        randomNumberGenerator.GetBytes(bytes);
+        string refreshToken = Convert.ToBase64String(bytes);
 
+        int refreshTokenExpirationMinutes = Convert.ToInt32(_configuration["RefreshToken:EXPIRATION_MINUTES"]);
+
+        DateTime refreshTokenExpiration = DateTime.UtcNow.AddMinutes(refreshTokenExpirationMinutes);
+
+        return new TokenResult
+        {
+            RefreshToken = refreshToken,
+            RefreshTokenExpiration = refreshTokenExpiration
+        };
+
+    }
 }

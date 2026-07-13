@@ -298,6 +298,22 @@ Note:
             dotnet add package System.IdentityModel.Tokens.Jwt
             dotnet add package Microsoft.IdentityModel.Tokens
 
+### Step 15 : Enabling Refresh Token mechanism
+
+    - a : We need to create a  RefreshToken entity class(having details about refresh token)
+        - create the table refreshToken then run scaffolding command to get the entity class generated for this table(run this command at the project root level)
+
+            dotnet ef dbcontext scaffold "ConnStr" Microsoft.EntityFrameworkCore.SqlServer --output-dir ../EmpMgmtSystem.Domain/Entities --context-dir Persistence/Context --context TempDbContext --project EmpMgmtSystem.Infra --startup-project EmpMgmtSystem.API --table RefreshToken --force
+
+            - Since we have already moved the EFCore generated model classes into the Domain\Entities so we need to give this folder as the --output-dir
+            - Also since AppDbContext is already created in the Infra project, we have to use a tempDbContext class which will have the changes only for the above table
+            - Manual work : copy paste the changes from tempDbContext to AppDbContext & remove the temp context file.
+
+
+        - it is better to have a separate table to store refresh token we can then track(Multiple sessions per user, Revocation & auditing etc)
+
+    - b: then we need to create RefreshToken related service and repositories(if required) to handle operations related to refresh-token.
+
 ### Notes
 
     - In order to access IConfigurations from projects other than WebAPI(available by default in Controllers and other files) eg: A classlib, we need to install the below package

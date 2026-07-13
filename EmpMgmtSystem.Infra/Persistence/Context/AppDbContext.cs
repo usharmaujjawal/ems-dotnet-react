@@ -42,6 +42,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<WorkLog> WorkLogs { get; set; }
 
+    public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
+
     // removed OnConfiguring() since it will be injected from the IoC container
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -553,6 +555,23 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.ProjectId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_tblWorkLog_projectId");
+        });
+        modelBuilder.Entity<RefreshToken>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_RefreshToken_Id");
+
+            entity.ToTable("RefreshToken", "auth");
+
+            entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.CreatedByIp).HasMaxLength(100);
+            entity.Property(e => e.ExpiresAt).HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasComputedColumnSql("(case when [IsRevoked]=(0) AND [ExpiresAt]>getutcdate() then CONVERT([bit],(1)) else CONVERT([bit],(0)) end)", false);
+            entity.Property(e => e.IsExpired).HasComputedColumnSql("(case when [ExpiresAt]<getutcdate() then CONVERT([bit],(1)) else CONVERT([bit],(0)) end)", false);
+            entity.Property(e => e.RevokedAt).HasColumnType("datetime");
+            entity.Property(e => e.Token).HasMaxLength(512);
         });
 
         OnModelCreatingPartial(modelBuilder);
