@@ -17,6 +17,28 @@ namespace EmpMgmtSystem.API.Controllers
             _authService = authService;
         }
 
+        [HttpGet("logout")]
+        public async Task<IActionResult> LogOut(RefreshRequestDto refreshRequestDto)
+        {
+            if (refreshRequestDto == null || string.IsNullOrEmpty(refreshRequestDto.RefreshToken))
+            {
+                return Unauthorized(new { message = "Invalid refresh token" });
+            }
+            try
+            {
+                bool status = await _authService.LogOutAsync(refreshRequestDto.RefreshToken);
+
+                if (!status)
+                    return Unauthorized(new { message = "Invalid or already revoked token" });
+
+                return Ok(new { message = "Logout successful" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
@@ -30,7 +52,7 @@ namespace EmpMgmtSystem.API.Controllers
             {
                 AuthResponseDto userData = await _authService.LoginAsync(dto);
 
-                if (userData == null) return Ok(new { message = "Login failed for the user" });
+                if (userData == null) return NotFound(new { message = "Employee does not exist. Please check" });
 
                 return Ok(userData);
             }

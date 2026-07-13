@@ -7,5 +7,6 @@ public interface IAuthService
     Task<AuthResponseDto> LoginAsync(LoginDto dto);
     Task<bool> ForgotPasswordAsync(string email);
     Task<TokenResult> RefreshTokenAsync(string refreshToken);
+    Task<bool> LogOutAsync(string token);
 
 }

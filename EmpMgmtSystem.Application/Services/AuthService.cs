@@ -91,4 +91,20 @@ public class AuthService(IAuthRepository authRepo, ITokenService tokenService, I
     {
         throw new NotImplementedException();
     }
+
+    public async Task<bool> LogOutAsync(string token)
+    {
+        // step i : fetch the refreshToken saved in the db
+        RefreshToken? refreshToken = await _refreshTokenRepo.GetByTokenAsync(token);
+
+        if (refreshToken == null || (refreshToken.IsExpired == true)) return false;
+
+        // mark the existing refreshToken as expired
+        refreshToken.ExpiresAt = DateTime.UtcNow;
+
+        // updating the refreshToken in the db 
+        await _refreshTokenRepo.UpdateAsync(refreshToken);
+
+        return true;
+    }
 }
