@@ -33,12 +33,14 @@ export default function Login() {
           }),
         });
 
-        if (!resp.Ok) {
+        if (!resp.ok) {
           setError({ error: "Login failed for the user" });
           return;
         }
-
-        const userData = resp.json();
+        const userData = await resp.json();
+        // saving accessToken and refreshToken in sessionStorage
+        sessionStorage.setItem("accessToken", userData.accessToken);
+        sessionStorage.setItem("refreshToken", userData.refreshToken);
 
         console.log(userData);
       } catch (err) {
