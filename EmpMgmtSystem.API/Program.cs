@@ -91,6 +91,14 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options => { });
 
+// Step v: adding ILogger service into the IoC container 
+builder.Host.ConfigureLogging(loggingProvider =>
+{
+    loggingProvider.ClearProviders(); // remove all default logging providers(Debug, Console, EventLog(Windows only) etc)
+    loggingProvider.AddConsole(); // add console logging 
+    loggingProvider.AddDebug(); // add debug logging
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

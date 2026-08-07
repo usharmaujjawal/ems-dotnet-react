@@ -11,10 +11,12 @@ namespace EmpMgmtSystem.API.Controllers
     {
 
         private readonly IAuthService _authService;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, ILogger<AuthController> logger)
         {
             _authService = authService;
+            _logger = logger;
         }
 
         [HttpGet("logout")]
@@ -22,19 +24,29 @@ namespace EmpMgmtSystem.API.Controllers
         {
             if (refreshRequestDto == null || string.IsNullOrEmpty(refreshRequestDto.RefreshToken))
             {
+                _logger.LogWarning("Operation {OperationName}, CorrelationId {CorrelationId}, Message {Message}", "LogOut", HttpContext.TraceIdentifier, "Invalid or empty refresh token.");
+
                 return Unauthorized(new { message = "Invalid refresh token" });
             }
             try
             {
+                _logger.LogInformation("Operation {OperationName}, CorrelationId {CorrelationId}, Message {Message}", "LogOut", HttpContext.TraceIdentifier, "Logout requested");
+
                 bool status = await _authService.LogOutAsync(refreshRequestDto.RefreshToken);
 
                 if (!status)
+                {
+                    _logger.LogWarning("Operation {OperationName}, CorrelationId {CorrelationId}, Message {Message}", "LogOut", HttpContext.TraceIdentifier, "Invalid or already revoked token.");
+
                     return Unauthorized(new { message = "Invalid or already revoked token" });
+                }
 
                 return Ok(new { message = "Logout successful" });
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Operation {OperationName}, CorrelationId {CorrelationId}", "LogOut", HttpContext.TraceIdentifier);
+
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
@@ -52,12 +64,20 @@ namespace EmpMgmtSystem.API.Controllers
             {
                 AuthResponseDto userData = await _authService.LoginAsync(dto);
 
-                if (userData == null) return NotFound(new { message = "Employee does not exist. Please check" });
+                _logger.LogInformation("Operation {OperationName}, CorrelationId {CorrelationId}, Message {Message}", "Login", HttpContext.TraceIdentifier, "Login requested");
+
+                if (userData == null)
+                {
+                    _logger.LogWarning("Operation {OperationName}, CorrelationId {CorrelationId}, Message {Message}", "Login", HttpContext.TraceIdentifier, "Employee does not exist");
+
+                    return NotFound(new { message = "Employee does not exist. Please check" });
+                }
 
                 return Ok(userData);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Operation {OperationName}, CorrelationId {CorrelationId}", "Login", HttpContext.TraceIdentifier);
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
@@ -65,8 +85,15 @@ namespace EmpMgmtSystem.API.Controllers
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken(RefreshRequestDto refreshRequestDto)
         {
+
+            _logger.LogInformation("Operation {OperationName}, CorrelationId {CorrelationId}, Message {Message}", "RefreshToken", HttpContext.TraceIdentifier, "Refresh token requested");
+
             if (refreshRequestDto == null || string.IsNullOrEmpty(refreshRequestDto.RefreshToken))
+            {
+                _logger.LogWarning("Operation {OperationName}, CorrelationId {CorrelationId}, Message {Message}", "RefreshToken", HttpContext.TraceIdentifier, "Invalid refresh token.");
+
                 return Unauthorized(new { message = "Invalid refresh token" });
+            }
 
             try
             {
@@ -75,6 +102,8 @@ namespace EmpMgmtSystem.API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Operation {OperationName}, CorrelationId {CorrelationId}", "RefreshToken", HttpContext.TraceIdentifier);
+
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
 

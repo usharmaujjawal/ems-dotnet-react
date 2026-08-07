@@ -4,16 +4,18 @@ using EmpMgmtSystem.Domain.Interfaces;
 using EmpMgmtSystem.Infra;
 using EmpMgmtSystem.Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Logging;
 
 namespace EmpMgmtSystem.Application.Services;
 
-public class AuthService(IAuthRepository authRepo, ITokenService tokenService, IRefreshTokenRepository refreshTokenRepo, IEmployeeRepository employeeRepo, IRefreshTokenService refreshTokenService) : IAuthService
+public class AuthService(IAuthRepository authRepo, ITokenService tokenService, IRefreshTokenRepository refreshTokenRepo, IEmployeeRepository employeeRepo, IRefreshTokenService refreshTokenService, ILogger<AuthService> logger) : IAuthService
 {
     private readonly IAuthRepository _authRepo = authRepo;
     private readonly ITokenService _tokenService = tokenService;
     private readonly IEmployeeRepository _employeeRepo = employeeRepo;
     private readonly IRefreshTokenRepository _refreshTokenRepo = refreshTokenRepo;
     private readonly IRefreshTokenService _refreshTokenService = refreshTokenService;
+    private readonly ILogger<AuthService> _logger = logger;
     public async Task<AuthResponseDto> LoginAsync(LoginDto dto)
     {
         // step i : check whether emailId exists or not 
@@ -64,11 +66,17 @@ public class AuthService(IAuthRepository authRepo, ITokenService tokenService, I
 
     public async Task<TokenResult> RefreshTokenAsync(string refreshToken)
     {
+        _logger.LogInformation("Operation {OperationName}, Message {Message}", "RefreshTokenAsync", "Refresh token requested");
+
         // Step i : Validate refreshToken
         ValidateRefreshTokenResult validateTokenResult = await _refreshTokenService.ValidateRefreshTokenResultAsync(refreshToken);
 
+
         if (validateTokenResult == null || validateTokenResult.RefreshToken == null)
+        {
+            _logger.LogWarning("Operation {OperationName}, Message {Message}", "RefreshTokenAsync", "Token validation failed");
             throw new UnauthorizedAccessException("Invalid token");
+        }
 
         // Step ii : fetch the emp based on the refreshToken
         Employee? emp = await _employeeRepo.GetEmployeeByIdAsync(validateTokenResult.RefreshToken.EmpId);
