@@ -1,0 +1,38 @@
+/* Global reset and base styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  font-size: 62.5%; /* 1 rem = 10px */
+}
+
+body {
+  height: 100%;
+  font-family: var(--font-family-primary);
+}
+
+:root {
+  --color-background-primary: #0f6e56;
+  --color-background-secondary: #f5f4ed;
+
+  --color-text-primary: #141413;
+  --color-text-secondary: #3d3d3a;
+  --color-text-error: #d32f2f;
+  --color-text-link: #2563eb; /* classic blue */
+
+  --color-white: #fff;
+
+  --font-family-primary: "Courier New", Courier, monospace;
+
+  --font-weight-nm: 400; /* normal */
+  --font-weight-bd: 700; /* bold */
+  --font-weight-xbd: 900; /* extra bold */
+  --radius-primary: 8px;
+  --radius-secondary: 5px;
+}

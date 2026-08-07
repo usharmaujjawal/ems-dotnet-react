@@ -278,6 +278,48 @@ Note:
     - to enable swagger UI we need to follow above steps
 ```
 
+### Step 13 : Enabling JWT Authentication
+
+    - a : Install the pkg into the API project: gives the middleware to validate JWTs automatically.
+        dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 9.0.1 // compatible with .NET 9
+
+    - b : Add Audience, Issuer, Expiration into the appsettings.json file & secrete_key into env variables or users_secrete
+
+    - c : Enable jwt validation into the Program.cs file by defining all the configurations(what needs to be validated etc)
+
+### step 14 : Added logic for Token Generation into TokenService
+
+    - In order to access IConfiguration into Service(a class library), we need to install these below package(version 9.0.0 is compatible with .net9).
+        dotnet add package Microsoft.Extensions.Configuration.Abstractions --version 9.0.0
+        dotnet add package Microsoft.Extensions.Configuration.Binder --version 9.0.0 // this is required to use GetValue<T>()
+
+    - We don’t need to install all packages in the Web API project — JwtBearer is sufficient.
+    	-But we do need to install IdentityModel packages in our Application project if we’re generating tokens there
+            dotnet add package System.IdentityModel.Tokens.Jwt
+            dotnet add package Microsoft.IdentityModel.Tokens
+
+### Step 15 : Enabling Refresh Token mechanism
+
+    - a : We need to create a  RefreshToken entity class(having details about refresh token)
+        - create the table refreshToken then run scaffolding command to get the entity class generated for this table(run this command at the project root level)
+
+            dotnet ef dbcontext scaffold "ConnStr" Microsoft.EntityFrameworkCore.SqlServer --output-dir ../EmpMgmtSystem.Domain/Entities --context-dir Persistence/Context --context TempDbContext --project EmpMgmtSystem.Infra --startup-project EmpMgmtSystem.API --table RefreshToken --force
+
+            - Since we have already moved the EFCore generated model classes into the Domain\Entities so we need to give this folder as the --output-dir
+            - Also since AppDbContext is already created in the Infra project, we have to use a tempDbContext class which will have the changes only for the above table
+            - Manual work : copy paste the changes from tempDbContext to AppDbContext & remove the temp context file.
+
+
+        - it is better to have a separate table to store refresh token we can then track(Multiple sessions per user, Revocation & auditing etc)
+
+    - b: then we need to create RefreshToken related service and repositories(if required) to handle operations related to refresh-token.
+
+### Notes
+
+    - In order to access IConfigurations from projects other than WebAPI(available by default in Controllers and other files) eg: A classlib, we need to install the below package
+
+        dotnet add package Microsoft.Extensions.Configuration.Abstractions
+
 ## 📁 Detailed Folder Structure
 
 ### Backend Folder Structure
@@ -431,6 +473,9 @@ npm install
 
 # Run development server (starts on http://localhost:5173)
 npm run dev
+
+# During development we can use
+dotnet watch run # Hot reload enabled(Changes will reflect without restarting the application). Cltr + R to restart
 ```
 
 ### Database Setup

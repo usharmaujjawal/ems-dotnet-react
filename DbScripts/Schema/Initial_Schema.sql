@@ -95,6 +95,27 @@ Alter table [org].[Department]
 Add CONSTRAINT FK_tblDept_headEmpId Foreign Key (headEmpId) REFERENCES [auth].[Employee]
 GO
 
+CREATE TABLE [auth].[RefreshToken]
+(
+    Id UNIQUEIDENTIFIER 
+        CONSTRAINT PK_RefreshToken_Id PRIMARY KEY
+        CONSTRAINT DF_RefreshToken_Id DEFAULT NEWID(),
+
+    EmpId INT NOT NULL 
+        CONSTRAINT FK_RefreshToken_User FOREIGN KEY REFERENCES [auth].[Employee](EmpId),
+
+    Token NVARCHAR(512) NOT NULL,   -- cryptographically random string
+    ExpiresAt DATETIME NOT NULL,
+    IsRevoked BIT NOT NULL CONSTRAINT DF_RefreshToken_IsRevoked DEFAULT 0,
+    RevokedAt DATETIME NULL,
+    CreatedAt DATETIME NOT NULL CONSTRAINT DF_RefreshToken_CreatedAt DEFAULT GETUTCDATE(),
+    CreatedByIp NVARCHAR(100) NULL,
+
+    -- Computed columns for convenience
+   IsExpired AS (CASE WHEN ExpiresAt < GETUTCDATE() THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END),
+   IsActive AS (CASE WHEN IsRevoked = 0 AND ExpiresAt > GETUTCDATE() THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END)
+);
+
 
 CREATE TABLE [org].[Project]
 (
@@ -257,25 +278,25 @@ CREATE TABLE [syslog].[AuditLog]
 GO
 
 -- Adding CONSTRAINTs explicillty
--- 1. ops.WorkLog — hours must be positive and MAX 24
+-- 1. ops.WorkLog ï¿½ hours must be positive and MAX 24
 ALTER TABLE [ops].[WorkLog]
 ADD CONSTRAINT CK_tblWorkLog_hoursLogged
     CHECK (hoursLogged > 0 AND hoursLogged <= 24);
 GO
 
--- 2. hr.LeaveReq — end date must be on or after start date
+-- 2. hr.LeaveReq ï¿½ end date must be on or after start date
 ALTER TABLE [hr].[LeaveReq]
 ADD CONSTRAINT CK_tblLeaveReq_dates
     CHECK (toDate >= fromDate);
 GO
 
--- 3. hr.PerfRating — score must be between 1.0 and 5.0
+-- 3. hr.PerfRating ï¿½ score must be between 1.0 and 5.0
 ALTER TABLE [hr].[PerfRating]
 ADD CONSTRAINT CK_tblPerfRating_ratingScore
     CHECK (ratingScore BETWEEN 1.0 AND 5.0);
 GO
 
--- 4. hr.PerfRating — quarter must be 1, 2, 3, or 4
+-- 4. hr.PerfRating ï¿½ quarter must be 1, 2, 3, or 4
 ALTER TABLE [hr].[PerfRating]
 ADD CONSTRAINT CK_tblPerfRating_quarter
     CHECK (quarter BETWEEN 1 AND 4);

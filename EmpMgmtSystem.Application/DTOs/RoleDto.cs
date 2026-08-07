@@ -1,4 +1,4 @@
-﻿namespace EmpMgmtSystem.Application;
+﻿namespace EmpMgmtSystem.Application.DTOs;
 
 public class RoleDto
 {

@@ -1,0 +1,117 @@
+.login-page-container {
+  height: 100vh;
+
+  display: grid;
+  grid-template-columns: 1.5fr 3fr;
+}
+
+.container--left {
+  background: var(--color-background-primary);
+}
+
+.container--right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--color-background-secondary);
+}
+
+.right--form {
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-title--primary {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(---color-text-primary);
+}
+
+.form-title--secondary {
+  font-size: 2rem;
+  color: var(--color-text-secondary);
+}
+
+.form--fields {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  color: var(--color-text-secondary);
+}
+
+.form--fields > label {
+  font-size: 1.5rem;
+}
+
+.form-input {
+  padding: 0.6rem;
+  border: 1px solid var(--color-text-secondary);
+  border-radius: var(--radius-primary);
+}
+
+.form-input:active {
+  border: none;
+}
+
+.form-field--forgetPwd {
+  font-size: 1.5rem;
+  align-self: flex-end;
+}
+
+.form-field--forgetPwd {
+  color: var(--color-text-link);
+  cursor: pointer;
+}
+
+.form--btn {
+  border: 1px solid grey;
+  border-radius: var(--radius-primary);
+
+  background: none;
+  cursor: pointer;
+
+  padding: 0.9rem 0.6rem;
+
+  font-family: inherit; /* ✅ ensures button uses body font */
+  font-weight: bold;
+  color: var(--color-text-secondary);
+  transition: all 0.3s;
+}
+
+.form--btn:hover {
+  background: var(--color-background-primary);
+  color: var(--color-white);
+  /* border: none; */
+}
+
+.line-break {
+  display: flex; /* allow children to stretch */
+  align-items: center; /* center the line around the text */
+}
+
+.line-break::before,
+.line-break::after {
+  content: ""; /* we need to define this for each pseudo element so that they can exists */
+  flex: 1; /* makes them expand */
+  border-bottom: 1px solid grey; /* the visible line */
+}
+
+.line-break::before {
+  margin-right: 0.75rem; /* spacing before text */
+}
+
+.line-break::after {
+  margin-left: 0.75rem; /* spacing after text */
+}
+
+.error-msg {
+  color: var(--color-text-error);
+  font-weight: 600;
+  font-size: 1.05rem;
+}

@@ -1,8 +1,12 @@
-using EmpMgmtSystem.Application;
-using EmpMgmtSystem.Domain;
-using EmpMgmtSystem.Infra;
+using EmpMgmtSystem.Application.Interfaces;
+using EmpMgmtSystem.Application.Services;
+using EmpMgmtSystem.Domain.Interfaces;
+using EmpMgmtSystem.Infra.Repositories;
 using EmpMgmtSystem.Infra.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,12 +24,80 @@ builder.Services.AddControllers();
 // Step iii: Adding all other Services into IoC container 
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 
 // Step iv : Enabling Swagger/OpenAPI support for the API project 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Step v : Setting up CORS(Cross Origin Resource Sharing)
+
+// v.a : getting origins(domains on which our UI will be running) from the configuration file using Binder pattern(fetch & then bind the configurations to a strongly typed type),instead of hardcoding into the program.cs  file
+
+var allowedOrigins = builder.Configuration.GetSection("CORS:AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
+
+
+builder.Services.AddCors(options =>
+{
+    // Named policy : We have to add the dev,qa,stage,uat prod env details as and when they are available
+    options.AddPolicy("AllowFrontend", policy =>
+        policy.WithOrigins(allowedOrigins)
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
+
+// Step vi : Add the JWT authentication scheme in the ConfigureServices method & define Token Validation Parameters.
+
+// vi.a : fetching jwt configuration from appsettings.json 
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+
+// For local/dev envs, it’s fine to keep a dummy Secret_Key inside appsettings.json. But for prod, we should always externalize it (env vars, user secrets, or a vault like Azure Key Vault).
+var secret_key = jwtSettings.GetValue<string>("Secret_Key") ?? throw new InvalidOperationException("JWT Secret_Key is missing!"); // fail-fast check for secret_key 
+
+// by default the DefaultAuthenticateSchema is CookiesAuthentication(for MVC controller) so we need to change this to JWT for WebAPI 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidIssuer = jwtSettings["Issuer"],
+
+        ValidateAudience = true,
+        ValidAudience = jwtSettings.GetValue<string>("Audience"),
+
+        ValidateLifetime = true,
+
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret_key)),
+
+        ClockSkew = TimeSpan.Zero // by default 5‑minute clock skew i.e for a grace period of 5 minutes our token will still remain valid even though it has crossed the EXPIRATION_MINUTES. (TimeZone.Zero) Removes the default 5‑minute grace period. Token expiration is enforced exactly at the exp claim time.
+    };
+});
+
+
+builder.Services.AddAuthorization(options => { });
+
+// Step v: adding ILogger service into the IoC container 
+builder.Host.ConfigureLogging(loggingProvider =>
+{
+    loggingProvider.ClearProviders(); // remove all default logging providers(Debug, Console, EventLog(Windows only) etc)
+    loggingProvider.AddConsole(); // add console logging 
+    loggingProvider.AddDebug(); // add debug logging
+});
 
 var app = builder.Build();
 
@@ -38,6 +110,12 @@ if (app.Environment.IsDevelopment())
 } // Swagger is only preferred for dev env 
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend");
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 // Map all controller endpoints (routes) into the request pipeline.
 app.MapControllers();
