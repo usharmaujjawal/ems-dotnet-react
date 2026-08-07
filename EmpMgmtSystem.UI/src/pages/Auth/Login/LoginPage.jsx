@@ -1,11 +1,14 @@
 import { API_BASE_URL } from "../../../utils/constants";
 import "./LoginPage.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [error, setError] = useState({});
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,6 +44,8 @@ export default function Login() {
         // saving accessToken and refreshToken in sessionStorage
         sessionStorage.setItem("accessToken", userData.accessToken);
         sessionStorage.setItem("refreshToken", userData.refreshToken);
+
+        navigate("/dashboard");
 
         console.log(userData);
       } catch (err) {
