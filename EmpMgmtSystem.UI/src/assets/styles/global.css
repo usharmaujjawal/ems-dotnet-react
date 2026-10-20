@@ -36,4 +36,10 @@ body {
   --font-weight-xbd: 900; /* extra bold */
   --radius-primary: 8px;
   --radius-secondary: 5px;
+
+  --dashboard-ink: #193128;
+  --dashboard-muted: #718078;
+  --dashboard-border: #e7ede9;
+  --dashboard-canvas: #f5f8f6;
+  --dashboard-green: #16845b;
 }
