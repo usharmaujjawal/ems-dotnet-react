@@ -141,39 +141,55 @@ function Dashboard() {
             </div>
           </div>
           <div className="main--secondRow">
-            <div>
+            <div className="secondRow--headCount">
               <div className="secondRow--header">
                 <div>Headcount by department</div>
                 <div>View all</div>
               </div>
               <div className="secondRow--items">
                 <div>Engineering</div>
-                <div>ProgressBar</div>
+                <div className="progressBar">
+                  {" "}
+                  <div className="currStatus colorPink"></div>
+                </div>
                 <div>88</div>
               </div>
               <div className="secondRow--items">
                 <div>Sales</div>
-                <div>ProgressBar</div>
+                <div className="progressBar">
+                  {" "}
+                  <div className="currStatus colorGrey"></div>
+                </div>
                 <div>52</div>
               </div>
               <div className="secondRow--items">
                 <div>HR</div>
-                <div>ProgressBar</div>
+                <div className="progressBar">
+                  {" "}
+                  <div className="currStatus colorNavy"></div>
+                </div>
                 <div>30</div>
               </div>
               <div className="secondRow--items">
                 <div>Finance</div>
-                <div>ProgressBar</div>
+                <div className="progressBar">
+                  {" "}
+                  <div className="currStatus colorOrange"></div>
+                </div>
                 <div>26</div>
               </div>
               <div className="secondRow--items">
                 <div>Design</div>
-                <div>ProgressBar</div>
+                <div className="progressBar">
+                  <div className="currStatus colorBlue"></div>
+                </div>
                 <div>18</div>
               </div>
               <div className="secondRow--items">
                 <div>Operations</div>
-                <div>ProgressBar</div>
+                <div className="progressBar">
+                  <div className="currStatus colorRed"></div>
+                </div>
                 <div>34</div>
               </div>
             </div>
@@ -221,7 +237,7 @@ function Dashboard() {
             </div>
           </div>
           <div className="main--thirdRow">
-            <div className="secondRow--header">
+            <div className="thirdRow--header">
               <div>My attendance -- June 2026</div>
               <div>Full log</div>
             </div>
@@ -267,7 +283,7 @@ function Dashboard() {
                 </tr>
               </tbody>
             </table>
-            <div className="secondRow--footer">
+            <div className="thirdRow--footer">
               <div className="footer-item">
                 <div>P</div>
                 <div>Present(13)</div>

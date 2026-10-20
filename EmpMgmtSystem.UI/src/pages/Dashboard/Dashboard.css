@@ -1,6 +1,4 @@
 .dashboard-page-container {
-  border: 2px solid red;
-
   display: grid;
   grid-template-columns: 1fr 3fr;
   min-height: 100vh;
@@ -8,17 +6,19 @@
   font-size: 2rem;
   /* font-weight: var(--font-weight-bd); */
   color: var(--color-text-secondary);
+  background-color: var(--color-background-secondary);
 
-  padding-left: 5px;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .left-panel {
   position: relative;
-  border: 2px solid yellow;
+  background-color: var(--color-white);
+  border-right: 2px solid var(--color-background-secondary--dark);
 }
 
 .right-panel {
-  border: 2px solid blue;
   height: 100vh;
 
   /* Making the right panel content as scrollable while keeping the whole page height fixed */
@@ -29,8 +29,9 @@
 .right-panel--header {
   display: flex;
   justify-content: space-between;
-  border: 1px solid orange;
   padding: 1.5rem;
+  background-color: var(--color-white);
+  border-bottom: 2px solid var(--color-background-secondary--dark);
 }
 
 .left-panel--options {
@@ -46,7 +47,6 @@
 }
 
 .options--section {
-  border: 1px solid blue;
   padding-left: 1rem;
   display: flex;
   flex-direction: column;
@@ -62,7 +62,6 @@
 }
 
 .left-panel--footer {
-  border: 1px solid red;
   width: 100%;
   padding: 1rem;
 
@@ -72,6 +71,8 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  border-top: 2px solid var(--color-background-secondary--dark);
 }
 
 .icon-filled {
@@ -81,59 +82,71 @@
 }
 
 .profile {
-  /* border: 1px solid blue; */
   border-radius: 50%;
   padding: 6px;
   background-color: var(--color-background-secondary--dark);
 }
 
 .right-panel--main {
-  border: 1px solid green;
   display: grid;
   grid-template-rows: 1fr 2fr 1fr;
   gap: 2rem;
 }
 
 .right-panel--main > div {
-  border: 1px solid blue;
   margin: 1rem;
 }
 
 .main--firstRow {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
   justify-content: space-between;
 }
 
 .main--firstRow > div {
-  border: 1px solid black;
+  background-color: var(--color-white);
+  border-radius: 1rem;
+  border: 2px solid var(--color-background-secondary--dark);
+  padding: 0.5rem;
 }
 
 .main--secondRow {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
   gap: 5rem;
 }
 
 .main--secondRow > div {
-  border: 1px solid yellow;
   flex: 1;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-background-secondary--dark);
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+
+.secondRow--headCount {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .secondRow--progressStatus {
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.secondRow--header {
+.secondRow--header,
+.thirdRow--header {
   display: flex;
   justify-content: space-between;
 }
 
 .secondRow--items {
-  border: 1px solid red;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  justify-content: space-between;
 }
 
 .secondRow--leaveItem {
@@ -150,9 +163,15 @@
   padding: 3px;
 }
 
+.main--thirdRow {
+  background-color: var(--color-white);
+  border: 2px solid var(--color-background-secondary--dark);
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+
 table {
   width: 100%;
-  border: 1px solid orange;
   text-align: center;
   /* border-collapse: collapse; */
 }
@@ -161,15 +180,13 @@ tbody td {
   background-color: var(--color-background-secondary);
 }
 
-.secondRow--footer {
-  border: 1px solid orangered;
+.thirdRow--footer {
   display: flex;
   gap: 2rem;
   align-items: center;
 }
 
 .footer-item {
-  border: 1px solid black;
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -179,4 +196,42 @@ tbody td {
   background-color: var(--color-background-secondary);
   padding: 3px;
   border-radius: 5px;
+}
+
+.progressBar {
+  width: 100%;
+  background-color: var(--color-background-secondary);
+  border: 2px solid var(--color-background-secondary--dark);
+  border-radius: 100px;
+}
+
+.currStatus {
+  width: 50%;
+  height: 98%;
+  border: 2px solid var(--color-background-secondary--dark);
+  border-radius: 100px;
+}
+
+.colorRed {
+  background-color: red;
+}
+
+.colorBlue {
+  background-color: blue;
+}
+
+.colorPink {
+  background-color: pink;
+}
+
+.colorGrey {
+  background-color: grey;
+}
+
+.colorOrange {
+  background-color: orange;
+}
+
+.colorNavy {
+  background-color: navy;
 }
