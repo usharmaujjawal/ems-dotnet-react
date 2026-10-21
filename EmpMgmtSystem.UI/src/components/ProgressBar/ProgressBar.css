@@ -1,0 +1,14 @@
+.progressBar {
+  width: 100%;
+  height: 0.8rem;
+  overflow: hidden;
+  background: #eff3f0;
+  border: 0;
+  border-radius: 99px;
+}
+
+.currStatus {
+  height: 100%;
+  border: 0;
+  border-radius: inherit;
+}
