@@ -87,83 +87,83 @@ function Dashboard() {
   };
 
   return (
-    <div className="dashboard-page-container">
-      <div className="left-panel">
-        <div className="left-panel--header">
+    <main className="dashboard-page-container">
+      <aside className="left-panel">
+        <header className="left-panel--header">
           <span className="icon-filled"></span>
           <span>EmpManage</span>
-        </div>
+        </header>
 
-        <div className="left-panel--options">
-          <div className="options--section">
-            <div className="left-panel--icons">
+        <nav className="left-panel--options">
+          <ul className="options--section">
+            <li className="left-panel--icons">
               <Apps24Regular />
               <span>Dashboard</span>
-            </div>
-          </div>
-          <div>
-            <h3>Organisation</h3>
-            <div className="options--section">
-              <div className="left-panel--icons">
+            </li>
+          </ul>
+          <section>
+            <h3>Organization</h3>
+            <ul className="options--section">
+              <li className="left-panel--icons">
                 <PersonCircle24Regular />
                 <span>Employees</span>
-              </div>
-              <div className="left-panel--icons">
+              </li>
+              <li className="left-panel--icons">
                 <Building24Regular />
                 <span>Departments</span>
-              </div>
-              <div className="left-panel--icons">
+              </li>
+              <li className="left-panel--icons">
                 <Briefcase24Regular />
                 <span>Projects</span>
-              </div>
-            </div>
-          </div>
-          <div>
+              </li>
+            </ul>
+          </section>
+          <section>
             <h3>Operations</h3>
-            <div className="options--section">
-              <div className="left-panel--icons">
+            <ul className="options--section">
+              <li className="left-panel--icons">
                 <CalendarCheckmark24Regular />
                 <span>Attendance</span>
-              </div>
-              <div className="left-panel--icons">
+              </li>
+              <li className="left-panel--icons">
                 <Clock24Regular />
                 <span>Work hours</span>
-              </div>
-              <div className="left-panel--icons">
+              </li>
+              <li className="left-panel--icons">
                 <Beach24Regular />
                 <span>Leaves</span>
-              </div>
-            </div>
-          </div>
-          <div>
+              </li>
+            </ul>
+          </section>
+          <section>
             <h3>Hr</h3>
-            <div className="options--section">
-              <div className="left-panel--icons">
+            <ul className="options--section">
+              <li className="left-panel--icons">
                 <MoneyHand24Regular />
                 <span>Payroll</span>
-              </div>
-              <div className="left-panel--icons">
+              </li>
+              <li className="left-panel--icons">
                 <Star24Regular />
                 <span>Performance</span>
-              </div>
-              <div className="left-panel--icons">
+              </li>
+              <li className="left-panel--icons">
                 <Laptop24Regular />
                 <span>Assests</span>
-              </div>
-            </div>
-          </div>
-        </div>
+              </li>
+            </ul>
+          </section>
+        </nav>
 
-        <div className="left-panel--footer">
+        <footer className="left-panel--footer">
           <span className="profile">AD</span>
           <div>
             <div>{empName}</div>
             <div>{role}</div>
           </div>
-        </div>
-      </div>
-      <div className="right-panel">
-        <div className="right-panel--header">
+        </footer>
+      </aside>
+      <section className="right-panel">
+        <header className="right-panel--header">
           <div>
             <span>Dashboard </span>
             <span>{currDate}</span>
@@ -172,48 +172,48 @@ function Dashboard() {
             <AlertBadge24Regular />
             <span className="profile">AD</span>
           </div>
-        </div>
-        <div className="right-panel--main">
-          <div className="main--firstRow">
-            <div>
+        </header>
+        <main className="right-panel--main">
+          <section className="main--firstRow">
+            <article>
               <div className="left-panel--icons">
                 <PersonCircle24Regular />
                 <div>Total Employees</div>
               </div>
               <div>248</div>
               <div>+6 this month</div>
-            </div>
-            <div>
+            </article>
+            <article>
               <div className="left-panel--icons">
                 <CalendarCheckmark24Regular />
                 <div>Present today</div>
               </div>
               <div>211</div>
               <div>85.1% attendance rate</div>
-            </div>
-            <div>
+            </article>
+            <article>
               <div className="left-panel--icons">
                 <Beach24Regular />
                 <div>On leave</div>
               </div>
               <div>14</div>
               <div>4 pending approval</div>
-            </div>
-            <div>
+            </article>
+            <article>
               <div className="left-panel--icons">
                 <MoneyHand24Regular />
                 <div>Payroll(Jun)</div>
               </div>
               <div>$18.4L</div>
               <div>Processed</div>
-            </div>
-          </div>
+            </article>
+          </section>
           <div className="main--secondRow">
-            <div className="secondRow--headCount">
-              <div className="secondRow--header">
+            <section className="secondRow--headCount">
+              <header className="secondRow--header">
                 <div>Headcount by department</div>
                 <div>View all</div>
-              </div>
+              </header>
               {headCount.map((item, index) => (
                 <div className="secondRow--items" key={index}>
                   <div>{item.label}</div>
@@ -221,30 +221,32 @@ function Dashboard() {
                   <div>{item.count}</div>
                 </div>
               ))}
-            </div>
-            <div>
-              <div className="secondRow--header">
+            </section>
+            <section>
+              <header className="secondRow--header">
                 <div>Leave requests</div>
                 <div>Review all</div>
-              </div>
+              </header>
               {leaveRequests.map((item, index) => (
-                <div key={index} className="secondRow--leaveItem">
+                <article key={index} className="secondRow--leaveItem">
                   <div className="profile">RS</div>
                   <div>
-                    <div>{item.name}</div>
-                    <div>{item.type}</div>
-                    <div>{formatLeavePeriod(item.startDate, item.endDate)}</div>
+                    <h4>{item.name}</h4>
+                    <p>{item.type}</p>
+                    <time>
+                      {formatLeavePeriod(item.startDate, item.endDate)}
+                    </time>
                   </div>
                   <div className="leaveStatus">{item.status}</div>
-                </div>
+                </article>
               ))}
-            </div>
+            </section>
           </div>
           <div className="main--thirdRow">
-            <div className="thirdRow--header">
+            <header className="thirdRow--header">
               <div>My attendance -- June 2026</div>
               <div>Full log</div>
-            </div>
+            </header>
             <table>
               <thead>
                 <tr>
@@ -263,7 +265,7 @@ function Dashboard() {
                 ))}
               </tbody>
             </table>
-            <div className="thirdRow--footer">
+            <footer className="thirdRow--footer">
               <div className="footer-item">
                 <div>P</div>
                 <div>Present(13)</div>
@@ -276,11 +278,11 @@ function Dashboard() {
                 <div>H</div>
                 <div>Holiday(7)</div>
               </div>
-            </div>
+            </footer>
           </div>
-        </div>
-      </div>
-    </div>
+        </main>
+      </section>
+    </main>
   );
 }
 
