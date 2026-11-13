@@ -1,0 +1,96 @@
+.emp-container {
+  color: var(--dashboard-ink);
+  background: var(--dashboard-canvas);
+
+  display: grid;
+  grid-template-rows: 1fr 2fr 6fr;
+}
+
+.emp-header {
+  border: 1px solid red;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.emp-total {
+  display: flex;
+  flex-direction: column;
+}
+
+.emp-export {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  /* padding: 0 2rem; */
+}
+
+input,
+select {
+  border: none;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.export--item {
+  display: flex;
+  border: 1px solid #000;
+  border-radius: 5px;
+  align-items: center;
+}
+
+.emp-main {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.emp-details {
+  padding: 1rem;
+}
+
+.emp-details tr {
+  border-bottom: 1px solid #000;
+}
+
+.profile-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-initials > :first-child {
+  border: 1px solid #000;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.emp-actions {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.emp-actions > div {
+  font-size: 2rem;
+}
+
+.details--page {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.pages {
+  display: flex;
+  gap: 5px;
+}
+
+.pages > div {
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 5px;
+}

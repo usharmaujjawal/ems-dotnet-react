@@ -14,6 +14,8 @@ import {
   AlertBadge24Regular,
 } from "@fluentui/react-icons";
 
+import { useNavigate } from "react-router-dom";
+
 function Dashboard() {
   const currDate = new Date().toDateString();
   const empName = "Alex Dev";
@@ -71,6 +73,8 @@ function Dashboard() {
     },
   ];
 
+  const navigate = useNavigate();
+
   const formatLeavePeriod = (startDate, endDate) => {
     const options = { month: "short", day: "numeric" }; // Format the date as short month + numeric day
 
@@ -106,7 +110,7 @@ function Dashboard() {
             <ul className="options--section">
               <li className="left-panel--icons">
                 <PersonCircle24Regular />
-                <span>Employees</span>
+                <span onClick={() => navigate("/employees")}>Employees</span>
               </li>
               <li className="left-panel--icons">
                 <Building24Regular />
