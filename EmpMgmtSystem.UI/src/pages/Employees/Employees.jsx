@@ -7,12 +7,218 @@ import {
   DeleteRegular,
 } from "@fluentui/react-icons";
 export default function Employees() {
+  //dynamic data - will be replaced with the actual api call once the backend is available.
+  const roles = ["All roles", "Admin", "Manager", "Employee"];
+  const departments = ["All departments", "Engineering", "HR", "Finance"];
+  const statues = ["All statues", "Active", "Inactive", "Probation"];
+
+  const empDetailsHeader = [
+    "Employee",
+    "Department",
+    "Role",
+    "Status",
+    "Hire date",
+    "Manager",
+    "",
+  ];
+  const empDetails = [
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+    {
+      name: "Riya Shah",
+      empId: "0024",
+      dept: "Engineering",
+      role: "Finance",
+      status: "Active",
+      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      manager: "Anil Verma",
+    },
+  ];
+
   return (
     <div className="emp-container">
       <header className="emp-header">
         <div className="emp-total">
           <span>Employees</span>
-          <span>248 total</span>
+          <span>{empDetails.length} total</span>
           <span>.6 added this month</span>
         </div>
         <div className="emp-export">
@@ -35,24 +241,29 @@ export default function Employees() {
         <div className="emp-main">
           <input type="search" placeholder="Search name, email, code..." />
           <select>
-            <option value="all">All Department</option>
-            <option value="engineering">Engineering</option>
-            <option value="hr">HR</option>
-            <option value="hr">Finance</option>
+            {departments.map((item, index) => {
+              return (
+                <option value={item} key={index}>
+                  {item}
+                </option>
+              );
+            })}
           </select>
 
           <select>
-            <option value="all">All Status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-            <option value="probation">Probation</option>
+            {statues.map((item, index) => (
+              <option value={item} key={index}>
+                {item}
+              </option>
+            ))}
           </select>
 
           <select>
-            <option value="all">All Roles</option>
-            <option value="admin">Admin</option>
-            <option value="manager">Manager</option>
-            <option value="employee">Employee</option>
+            {roles.map((item, index) => (
+              <option value={item} key={index}>
+                {item}
+              </option>
+            ))}
           </select>
         </div>
       </main>
@@ -64,73 +275,47 @@ export default function Employees() {
               <th>
                 <input type="checkbox" />
               </th>
-              <th>Employee</th>
-              <th>Department</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Hire date</th>
-              <th>Manager</th>
-              <th></th>
+              {empDetailsHeader.map((item, index) => (
+                <th key={index}>{item}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <input type="checkbox"></input>
-              </td>
-              <td className="profile-initials">
-                <div>RS</div>
-                <div>Riya Shah</div>
-                <div>Emp-0024</div>
-              </td>
-              <td>Engineering</td>
-              <td>Finance</td>
-              <td>Active</td>
-              <td>12 Mar 2022</td>
-              <td>Anil Verma</td>
-              <td className="emp-actions">
-                <div>
-                  <EyeRegular />
-                </div>
-                <div>
-                  <ClipboardEditRegular />
-                </div>
-                <div>
-                  <DeleteRegular />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox"></input>
-              </td>
-              <td className="profile-initials">
-                <div>RS</div>
-                <div>Riya Shah</div>
-                <div>Emp-0024</div>
-              </td>
-              <td>Engineering</td>
-              <td>Finance</td>
-              <td>Active</td>
-              <td>12 Mar 2022</td>
-              <td>Anil Verma</td>
-              <td className="emp-actions">
-                <div>
-                  <EyeRegular />
-                </div>
-                <div>
-                  <ClipboardEditRegular />
-                </div>
-                <div>
-                  <DeleteRegular />
-                </div>
-              </td>
-            </tr>
+            {empDetails.map((item, index) => {
+              return (
+                <tr>
+                  <td>
+                    <input type="checkbox"></input>
+                  </td>
+                  <td className="profile-initials">
+                    <div>RS</div>
+                    <div>{item.name}</div>
+                    <div>Emp-{item.empId}</div>
+                  </td>
+                  <td>{item.dept}</td>
+                  <td>{item.role}</td>
+                  <td>{item.status}</td>
+                  <td>{item.hireData}</td>
+                  <td>{item.manager}</td>
+                  <td className="emp-actions">
+                    <div>
+                      <EyeRegular />
+                    </div>
+                    <div>
+                      <ClipboardEditRegular />
+                    </div>
+                    <div>
+                      <DeleteRegular />
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
 
         <div className="details--page">
-          <div>Showing 1-5 of 248 </div>
+          <div>Showing 1-10 of {empDetails.length} </div>
           <div className="pages">
             <div>&lt;</div>
             <div>1</div>
