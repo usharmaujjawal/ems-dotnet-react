@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./Employees.css";
 import {
   ArrowDownloadFilled,
@@ -24,7 +25,7 @@ export default function Employees() {
   const empDetails = [
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "001",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -33,7 +34,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "002",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -42,7 +43,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "003",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -51,7 +52,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "004",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -60,7 +61,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "005",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -69,7 +70,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "006",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -78,7 +79,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "007",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -87,7 +88,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "008",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -96,7 +97,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "009",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -105,7 +106,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "0010",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -114,7 +115,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "0011",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -123,7 +124,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "0012",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -132,7 +133,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "0013",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -141,7 +142,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "0014",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -150,7 +151,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "0015",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -159,7 +160,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "0016",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -168,7 +169,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "0017",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -177,7 +178,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "0018",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -186,7 +187,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "0019",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -195,7 +196,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "0020",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -204,7 +205,7 @@ export default function Employees() {
     },
     {
       name: "Riya Shah",
-      empId: "0024",
+      empId: "0021",
       dept: "Engineering",
       role: "Finance",
       status: "Active",
@@ -212,6 +213,28 @@ export default function Employees() {
       manager: "Anil Verma",
     },
   ];
+
+  // pagination
+  const [currPage, setCurrPage] = useState(1),
+    PAGE_SIZE = 10,
+    startIndex = (currPage - 1) * PAGE_SIZE,
+    endIndex = startIndex + PAGE_SIZE,
+    totalPages = Math.ceil(empDetails.length / PAGE_SIZE),
+    paginatedEmpData = empDetails.slice(startIndex, endIndex);
+
+  const handlePagination = (value) => {
+    setCurrPage(value);
+  };
+
+  const handleNext = (item) => {
+    if (currPage >= totalPages) return;
+    setCurrPage((currPage) => currPage + 1);
+  };
+
+  const handlePrevious = (item) => {
+    if (currPage <= 1) return;
+    setCurrPage((currPage) => currPage - 1);
+  };
 
   return (
     <div className="emp-container">
@@ -281,9 +304,9 @@ export default function Employees() {
             </tr>
           </thead>
           <tbody>
-            {empDetails.map((item, index) => {
+            {paginatedEmpData.map((item, index) => {
               return (
-                <tr>
+                <tr key={index}>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -315,17 +338,25 @@ export default function Employees() {
         </table>
 
         <div className="details--page">
-          <div>Showing 1-10 of {empDetails.length} </div>
+          <div>
+            Showing {startIndex + 1}-{Math.min(endIndex, empDetails.length)} of{" "}
+            {empDetails.length}{" "}
+          </div>
           <div className="pages">
-            <div>&lt;</div>
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
-            <div>...</div>
-            <div>50</div>
-
-            <div>&gt;</div>
+            <div onClick={handlePrevious}>&lt;</div>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+              (item, index) => (
+                <div
+                  onClick={() => {
+                    handlePagination(item);
+                  }}
+                  key={index}
+                >
+                  {item}
+                </div>
+              ),
+            )}
+            <div onClick={handleNext}>&gt;</div>
           </div>
         </div>
       </section>
