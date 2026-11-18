@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Employees.css";
 import {
   ArrowDownloadFilled,
@@ -236,6 +236,41 @@ export default function Employees() {
     setCurrPage((currPage) => currPage - 1);
   };
 
+  // export functionality
+  const [selectedEmployees, setSelectedEmployees] = useState([]);
+
+  // if the selected empids are present in the list remove them - works in case of Deselection and if they are not present add them - works in case of Selection.
+  const handleEmpSelect = (empId) => {
+    setSelectedEmployees((prev) =>
+      prev.includes(empId)
+        ? prev.filter((id) => id !== empId)
+        : [...prev, empId],
+    );
+  };
+
+  const handleAllSelected = () => {
+    const currentPageEmpIds = paginatedEmpData.map((emp) => emp.empId);
+
+    // checks whether all the empIds of the currentPage are selected or not
+    const allSelected = currentPageEmpIds.every((id) =>
+      selectedEmployees.includes(id),
+    );
+
+    // if all the ids are selected - then remove all the currentPageIds keeping the rest of the empIds(selected from other pages right): this is the case for uncheck
+    if (allSelected) {
+      setSelectedEmployees((prev) =>
+        prev.filter((id) => !currentPageEmpIds.includes(id)),
+      );
+    }
+
+    // else - add all the currentPageIds, along with prev selected ids by removing duplicated ids(may be some are selected and some are not page so using Set to remove the duplicate empIds from the array.)
+    else {
+      setSelectedEmployees((prev) => [
+        ...new Set([...prev, ...currentPageEmpIds]),
+      ]);
+    }
+  };
+
   return (
     <div className="employees-page">
       <header className="employees-header">
@@ -319,8 +354,19 @@ export default function Employees() {
             <table className="employees-table">
               <thead>
                 <tr>
+                  {/* paginationEmpData.length > 0 : added this condition because of vacuous truth. i.e [].every(() => false) return true and even for an empty paginatedEmpData the below every condition will return true since there are no numbers that violate the condition*/}
                   <th scope="col">
-                    <input type="checkbox" aria-label="Select all employees" />
+                    <input
+                      type="checkbox"
+                      aria-label="Select all employees"
+                      onChange={handleAllSelected}
+                      checked={
+                        paginatedEmpData.length > 0 &&
+                        paginatedEmpData.every((emp) =>
+                          selectedEmployees.includes(emp.empId),
+                        )
+                      }
+                    />
                   </th>
                   {empDetailsHeader.map((item, index) => (
                     <th key={index} scope="col">
@@ -333,7 +379,12 @@ export default function Employees() {
                 {paginatedEmpData.map((item) => (
                   <tr key={item.empId}>
                     <td>
-                      <input type="checkbox" aria-label={`Select ${item.name}`} />
+                      <input
+                        type="checkbox"
+                        aria-label={`Select ${item.name}`}
+                        onChange={() => handleEmpSelect(item.empId)}
+                        checked={selectedEmployees.includes(item.empId)}
+                      />
                     </td>
                     <td>
                       <div className="employee-identity">
@@ -386,8 +437,8 @@ export default function Employees() {
 
           <footer className="employees-pagination">
             <span className="employees-pagination-summary">
-              Showing {startIndex + 1}-{Math.min(endIndex, empDetails.length)} of{" "}
-              {empDetails.length} employees
+              Showing {startIndex + 1}-{Math.min(endIndex, empDetails.length)}{" "}
+              of {empDetails.length} employees
             </span>
             <nav className="employees-pages" aria-label="Employee pages">
               <button
