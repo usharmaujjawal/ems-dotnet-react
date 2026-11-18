@@ -11,7 +11,7 @@ export default function Employees() {
   //dynamic data - will be replaced with the actual api call once the backend is available.
   const roles = ["All roles", "Admin", "Manager", "Employee"];
   const departments = ["All departments", "Engineering", "HR", "Finance"];
-  const statues = ["All statues", "Active", "Inactive", "Probation"];
+  const statuses = ["All statuses", "Active", "Inactive", "Probation"];
 
   const empDetailsHeader = [
     "Employee",
@@ -20,7 +20,7 @@ export default function Employees() {
     "Status",
     "Hire date",
     "Manager",
-    "",
+    "Actions",
   ];
   const empDetails = [
     {
@@ -226,140 +226,202 @@ export default function Employees() {
     setCurrPage(value);
   };
 
-  const handleNext = (item) => {
+  const handleNext = () => {
     if (currPage >= totalPages) return;
     setCurrPage((currPage) => currPage + 1);
   };
 
-  const handlePrevious = (item) => {
+  const handlePrevious = () => {
     if (currPage <= 1) return;
     setCurrPage((currPage) => currPage - 1);
   };
 
   return (
-    <div className="emp-container">
-      <header className="emp-header">
-        <div className="emp-total">
-          <span>Employees</span>
-          <span>{empDetails.length} total</span>
-          <span>.6 added this month</span>
+    <div className="employees-page">
+      <header className="employees-header">
+        <div className="employees-heading">
+          <p className="employees-eyebrow">Organization</p>
+          <h1>Employees</h1>
+          <p className="employees-summary">
+            <span>{empDetails.length} employees</span>
+            <span className="employees-summary-divider" aria-hidden="true">
+              ·
+            </span>
+            <span>6 added this month</span>
+          </p>
         </div>
-        <div className="emp-export">
-          <div className="export--item">
-            <div>
+        <div className="employees-actions">
+          <button
+            className="employees-button employees-button--secondary"
+            type="button"
+          >
+            <span className="employees-button-icon">
               <ArrowDownloadFilled />
-            </div>
-            <div>Export</div>
-          </div>
-          <div className="export--item">
-            <div>
+            </span>
+            Export
+          </button>
+          <button
+            className="employees-button employees-button--primary"
+            type="button"
+          >
+            <span className="employees-button-icon">
               <AddFilled />
-            </div>
-            <div>Add employee</div>
-          </div>
+            </span>
+            Add employee
+          </button>
         </div>
       </header>
 
-      <main>
-        <div className="emp-main">
-          <input type="search" placeholder="Search name, email, code..." />
-          <select>
-            {departments.map((item, index) => {
-              return (
+      <main className="employees-content">
+        <section className="employees-toolbar" aria-label="Employee filters">
+          <label className="employees-search">
+            <span className="visually-hidden">Search employees</span>
+            <input type="search" placeholder="Search name, email, or code..." />
+          </label>
+          <label>
+            <span className="visually-hidden">Filter by department</span>
+            <select defaultValue={departments[0]}>
+              {departments.map((item, index) => {
+                return (
+                  <option value={item} key={index}>
+                    {item}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
+
+          <label>
+            <span className="visually-hidden">Filter by status</span>
+            <select defaultValue={statuses[0]}>
+              {statuses.map((item, index) => (
                 <option value={item} key={index}>
                   {item}
                 </option>
-              );
-            })}
-          </select>
-
-          <select>
-            {statues.map((item, index) => (
-              <option value={item} key={index}>
-                {item}
-              </option>
-            ))}
-          </select>
-
-          <select>
-            {roles.map((item, index) => (
-              <option value={item} key={index}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </div>
-      </main>
-
-      <section className="emp-details">
-        <table>
-          <thead>
-            <tr>
-              <th>
-                <input type="checkbox" />
-              </th>
-              {empDetailsHeader.map((item, index) => (
-                <th key={index}>{item}</th>
               ))}
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedEmpData.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td className="profile-initials">
-                    <div>RS</div>
-                    <div>{item.name}</div>
-                    <div>Emp-{item.empId}</div>
-                  </td>
-                  <td>{item.dept}</td>
-                  <td>{item.role}</td>
-                  <td>{item.status}</td>
-                  <td>{item.hireData}</td>
-                  <td>{item.manager}</td>
-                  <td className="emp-actions">
-                    <div>
-                      <EyeRegular />
-                    </div>
-                    <div>
-                      <ClipboardEditRegular />
-                    </div>
-                    <div>
-                      <DeleteRegular />
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+            </select>
+          </label>
 
-        <div className="details--page">
-          <div>
-            Showing {startIndex + 1}-{Math.min(endIndex, empDetails.length)} of{" "}
-            {empDetails.length}{" "}
-          </div>
-          <div className="pages">
-            <div onClick={handlePrevious}>&lt;</div>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-              (item, index) => (
-                <div
-                  onClick={() => {
-                    handlePagination(item);
-                  }}
-                  key={index}
-                >
+          <label>
+            <span className="visually-hidden">Filter by role</span>
+            <select defaultValue={roles[0]}>
+              {roles.map((item, index) => (
+                <option value={item} key={index}>
                   {item}
-                </div>
-              ),
-            )}
-            <div onClick={handleNext}>&gt;</div>
+                </option>
+              ))}
+            </select>
+          </label>
+        </section>
+
+        <section className="employees-card" aria-label="Employee directory">
+          <div className="employees-table-scroll">
+            <table className="employees-table">
+              <thead>
+                <tr>
+                  <th scope="col">
+                    <input type="checkbox" aria-label="Select all employees" />
+                  </th>
+                  {empDetailsHeader.map((item, index) => (
+                    <th key={index} scope="col">
+                      {item}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedEmpData.map((item) => (
+                  <tr key={item.empId}>
+                    <td>
+                      <input type="checkbox" aria-label={`Select ${item.name}`} />
+                    </td>
+                    <td>
+                      <div className="employee-identity">
+                        <span className="employee-avatar" aria-hidden="true">
+                          RS
+                        </span>
+                        <span className="employee-identity-details">
+                          <span className="employee-name">{item.name}</span>
+                          <span className="employee-id">Emp-{item.empId}</span>
+                        </span>
+                      </div>
+                    </td>
+                    <td>{item.dept}</td>
+                    <td>{item.role}</td>
+                    <td>
+                      <span className="employee-status">{item.status}</span>
+                    </td>
+                    <td>{item.hireData}</td>
+                    <td>{item.manager}</td>
+                    <td>
+                      <div className="employee-row-actions">
+                        <button
+                          type="button"
+                          aria-label={`View ${item.name}`}
+                          title="View employee"
+                        >
+                          <EyeRegular />
+                        </button>
+                        <button
+                          type="button"
+                          aria-label={`Edit ${item.name}`}
+                          title="Edit employee"
+                        >
+                          <ClipboardEditRegular />
+                        </button>
+                        <button
+                          type="button"
+                          aria-label={`Delete ${item.name}`}
+                          title="Delete employee"
+                        >
+                          <DeleteRegular />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </div>
-      </section>
+
+          <footer className="employees-pagination">
+            <span className="employees-pagination-summary">
+              Showing {startIndex + 1}-{Math.min(endIndex, empDetails.length)} of{" "}
+              {empDetails.length} employees
+            </span>
+            <nav className="employees-pages" aria-label="Employee pages">
+              <button
+                type="button"
+                onClick={handlePrevious}
+                disabled={currPage <= 1}
+                aria-label="Previous page"
+              >
+                &lt;
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (item) => (
+                  <button
+                    type="button"
+                    onClick={() => handlePagination(item)}
+                    key={item}
+                    aria-current={currPage === item ? "page" : undefined}
+                  >
+                    {item}
+                  </button>
+                ),
+              )}
+              <button
+                type="button"
+                onClick={handleNext}
+                disabled={currPage >= totalPages}
+                aria-label="Next page"
+              >
+                &gt;
+              </button>
+            </nav>
+          </footer>
+        </section>
+      </main>
     </div>
   );
 }

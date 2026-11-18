@@ -18,24 +18,48 @@ body {
 }
 
 :root {
-  --color-background-primary: #0f6e56;
+  /* Shared typography scale keeps page-level styles visually consistent. */
+  --font-family-primary: Inter, "Segoe UI", Arial, sans-serif;
+  --font-size-2xs: 1.05rem;
+  --font-size-xs: 1.1rem;
+  --font-size-sm: 1.2rem;
+  --font-size-sm-plus: 1.25rem;
+  --font-size-md-compact: 1.3rem;
+  --font-size-md-small: 1.35rem;
+  --font-size-md: 1.4rem;
+  --font-size-lg-compact: 1.55rem;
+  --font-size-lg: 1.6rem;
+  --font-size-xl-compact: 1.8rem;
+  --font-size-xl: 2rem;
+  --font-size-2xl: 2.4rem;
+  --font-size-3xl: 3rem;
+
+  /* Shared border tokens match the dashboard's light, rounded surfaces. */
+  --border-width-sm: 1px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+
+  --color-background-primary: #16845b;
   --color-background-secondary: #f5f4ed;
   --color-background-secondary--dark: #dddcd5;
 
-  --color-text-primary: #141413;
-  --color-text-secondary: #3d3d3a;
+  --color-text-primary: #193128;
+  --color-text-secondary: #64736c;
   --color-text-error: #d32f2f;
   --color-text-link: #2563eb; /* classic blue */
 
   --color-white: #fff;
 
-  --font-family-primary: "Courier New", Courier, monospace;
-
   --font-weight-nm: 400; /* normal */
   --font-weight-bd: 600; /* bold */
   --font-weight-xbd: 900; /* extra bold */
-  --radius-primary: 8px;
-  --radius-secondary: 5px;
+  --radius-primary: var(--radius-md);
+  --radius-secondary: var(--radius-sm);
 
   --dashboard-ink: #193128;
   --dashboard-muted: #718078;
