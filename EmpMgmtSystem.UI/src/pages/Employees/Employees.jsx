@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Employees.css";
+import "../../utils/initials";
 import {
   ArrowDownloadFilled,
   AddFilled,
@@ -7,6 +8,7 @@ import {
   ClipboardEditRegular,
   DeleteRegular,
 } from "@fluentui/react-icons";
+import getInitials from "../../utils/initials";
 export default function Employees() {
   //dynamic data - will be replaced with the actual api call once the backend is available.
   const roles = ["All roles", "Admin", "Manager", "Employee"];
@@ -425,7 +427,7 @@ export default function Employees() {
                     <td>
                       <div className="employee-identity">
                         <span className="employee-avatar" aria-hidden="true">
-                          RS
+                          {getInitials(item.name)}
                         </span>
                         <span className="employee-identity-details">
                           <span className="employee-name">{item.name}</span>

@@ -1,4 +1,5 @@
 import "./Dashboard.css";
+import "../../utils/initials";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import { Apps24Regular } from "@fluentui/react-icons";
 import {
@@ -15,6 +16,7 @@ import {
 } from "@fluentui/react-icons";
 
 import { useNavigate } from "react-router-dom";
+import getInitials from "../../utils/initials";
 
 function Dashboard() {
   const currDate = new Date().toDateString();
@@ -174,7 +176,7 @@ function Dashboard() {
           </div>
           <div className="left-panel--icons">
             <AlertBadge24Regular />
-            <span className="profile">AD</span>
+            <span className="profile">{getInitials("Rahul Sharma")}</span>
           </div>
         </header>
         <main className="right-panel--main">
