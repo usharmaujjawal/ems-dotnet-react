@@ -27,200 +27,222 @@ export default function Employees() {
       name: "Riya Shah",
       empId: "001",
       dept: "Engineering",
-      role: "Finance",
+      role: "Admin",
       status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      hireDate: "01/15/2025 09:12:45",
       manager: "Anil Verma",
     },
     {
-      name: "Riya Shah",
+      name: "Arjun Mehta",
       empId: "002",
-      dept: "Engineering",
-      role: "Finance",
+      dept: "Finance",
+      role: "Manager",
       status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
+      hireDate: "02/10/2025 11:22:18",
+      manager: "Priya Nair",
     },
     {
-      name: "Riya Shah",
+      name: "Sneha Kapoor",
       empId: "003",
-      dept: "Engineering",
-      role: "Finance",
-      status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
+      dept: "HR",
+      role: "Employee",
+      status: "Probation",
+      hireDate: "03/05/2025 14:35:09",
+      manager: "Vikram Joshi",
     },
     {
-      name: "Riya Shah",
+      name: "Rahul Sharma",
       empId: "004",
       dept: "Engineering",
-      role: "Finance",
+      role: "Employee",
       status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      hireDate: "04/18/2025 16:45:22",
       manager: "Anil Verma",
     },
     {
-      name: "Riya Shah",
+      name: "Neha Gupta",
       empId: "005",
-      dept: "Engineering",
-      role: "Finance",
-      status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
+      dept: "Finance",
+      role: "Admin",
+      status: "Inactive",
+      hireDate: "05/09/2025 08:17:31",
+      manager: "Priya Nair",
     },
     {
-      name: "Riya Shah",
+      name: "Karan Malhotra",
       empId: "006",
-      dept: "Engineering",
-      role: "Finance",
+      dept: "HR",
+      role: "Manager",
       status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
+      hireDate: "06/02/2025 13:28:54",
+      manager: "Vikram Joshi",
     },
     {
-      name: "Riya Shah",
+      name: "Aditi Singh",
       empId: "007",
       dept: "Engineering",
-      role: "Finance",
-      status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      role: "Employee",
+      status: "Probation",
+      hireDate: "07/21/2025 10:14:20",
       manager: "Anil Verma",
     },
     {
-      name: "Riya Shah",
+      name: "Mohit Arora",
       empId: "008",
-      dept: "Engineering",
-      role: "Finance",
+      dept: "Finance",
+      role: "Employee",
       status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
+      hireDate: "08/14/2025 17:41:15",
+      manager: "Priya Nair",
     },
     {
-      name: "Riya Shah",
+      name: "Pooja Yadav",
       empId: "009",
+      dept: "HR",
+      role: "Admin",
+      status: "Inactive",
+      hireDate: "09/11/2025 12:05:44",
+      manager: "Vikram Joshi",
+    },
+    {
+      name: "Rohit Jain",
+      empId: "010",
       dept: "Engineering",
-      role: "Finance",
+      role: "Manager",
       status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      hireDate: "10/03/2025 09:55:10",
       manager: "Anil Verma",
     },
     {
-      name: "Riya Shah",
-      empId: "0010",
-      dept: "Engineering",
-      role: "Finance",
+      name: "Simran Kaur",
+      empId: "011",
+      dept: "Finance",
+      role: "Employee",
+      status: "Probation",
+      hireDate: "11/19/2025 15:26:08",
+      manager: "Priya Nair",
+    },
+    {
+      name: "Aakash Verma",
+      empId: "012",
+      dept: "HR",
+      role: "Manager",
       status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      hireDate: "12/07/2025 11:42:28",
+      manager: "Vikram Joshi",
+    },
+    {
+      name: "Meera Iyer",
+      empId: "013",
+      dept: "Engineering",
+      role: "Admin",
+      status: "Inactive",
+      hireDate: "01/08/2026 08:31:19",
       manager: "Anil Verma",
     },
     {
-      name: "Riya Shah",
-      empId: "0011",
-      dept: "Engineering",
-      role: "Finance",
+      name: "Yash Patel",
+      empId: "014",
+      dept: "Finance",
+      role: "Employee",
       status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      hireDate: "02/17/2026 14:18:42",
+      manager: "Priya Nair",
+    },
+    {
+      name: "Nisha Reddy",
+      empId: "015",
+      dept: "HR",
+      role: "Employee",
+      status: "Probation",
+      hireDate: "03/23/2026 16:07:25",
+      manager: "Vikram Joshi",
+    },
+    {
+      name: "Dev Khanna",
+      empId: "016",
+      dept: "Engineering",
+      role: "Manager",
+      status: "Active",
+      hireDate: "04/29/2026 10:50:39",
       manager: "Anil Verma",
     },
     {
-      name: "Riya Shah",
-      empId: "0012",
-      dept: "Engineering",
-      role: "Finance",
+      name: "Ishita Bose",
+      empId: "017",
+      dept: "Finance",
+      role: "Admin",
+      status: "Inactive",
+      hireDate: "05/13/2026 12:43:16",
+      manager: "Priya Nair",
+    },
+    {
+      name: "Saurabh Mishra",
+      empId: "018",
+      dept: "HR",
+      role: "Employee",
       status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
+      hireDate: "06/25/2026 09:24:51",
+      manager: "Vikram Joshi",
+    },
+    {
+      name: "Tanvi Chawla",
+      empId: "019",
+      dept: "Engineering",
+      role: "Employee",
+      status: "Probation",
+      hireDate: "07/07/2026 15:11:33",
       manager: "Anil Verma",
     },
     {
-      name: "Riya Shah",
-      empId: "0013",
-      dept: "Engineering",
-      role: "Finance",
+      name: "Abhishek Roy",
+      empId: "020",
+      dept: "Finance",
+      role: "Manager",
       status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
+      hireDate: "08/20/2026 13:37:27",
+      manager: "Priya Nair",
     },
     {
-      name: "Riya Shah",
-      empId: "0014",
-      dept: "Engineering",
-      role: "Finance",
-      status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
-    },
-    {
-      name: "Riya Shah",
-      empId: "0015",
-      dept: "Engineering",
-      role: "Finance",
-      status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
-    },
-    {
-      name: "Riya Shah",
-      empId: "0016",
-      dept: "Engineering",
-      role: "Finance",
-      status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
-    },
-    {
-      name: "Riya Shah",
-      empId: "0017",
-      dept: "Engineering",
-      role: "Finance",
-      status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
-    },
-    {
-      name: "Riya Shah",
-      empId: "0018",
-      dept: "Engineering",
-      role: "Finance",
-      status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
-    },
-    {
-      name: "Riya Shah",
-      empId: "0019",
-      dept: "Engineering",
-      role: "Finance",
-      status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
-    },
-    {
-      name: "Riya Shah",
-      empId: "0020",
-      dept: "Engineering",
-      role: "Finance",
-      status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
-    },
-    {
-      name: "Riya Shah",
-      empId: "0021",
-      dept: "Engineering",
-      role: "Finance",
-      status: "Active",
-      hireData: "11/13/2026 17:14:07" /*CultureInvariant datetimeStamp */,
-      manager: "Anil Verma",
+      name: "Kavya Menon",
+      empId: "021",
+      dept: "HR",
+      role: "Admin",
+      status: "Inactive",
+      hireDate: "09/15/2026 11:06:48",
+      manager: "Vikram Joshi",
     },
   ];
 
-  // pagination
+  // filters - Department, Status, Role and Search
+  const [selectedDept, setSelectedDept] = useState(departments[0]);
+  const [selectedRole, setSelectedRole] = useState(roles[0]);
+  const [selectedStatus, setSelectedStatus] = useState(statuses[0]);
+
+  const filteredData =
+    // adding an extra condition for "All department - in case of All Departments - return all the paginated records."
+    empDetails.filter((emp) => {
+      const deptMatch =
+        selectedDept === departments[0] || emp.dept === selectedDept;
+
+      const roleMatch = selectedRole === roles[0] || emp.role === selectedRole;
+
+      const statusMatch =
+        selectedStatus === statuses[0] || emp.status === selectedStatus;
+
+      return deptMatch && roleMatch && statusMatch;
+    });
+
+  // pagination : is based on filtered data
   const [currPage, setCurrPage] = useState(1),
     PAGE_SIZE = 10,
     startIndex = (currPage - 1) * PAGE_SIZE,
     endIndex = startIndex + PAGE_SIZE,
-    totalPages = Math.ceil(empDetails.length / PAGE_SIZE),
-    paginatedEmpData = empDetails.slice(startIndex, endIndex);
+    totalPages = Math.ceil(filteredData.length / PAGE_SIZE),
+    visibleStart =
+      filteredData.length === 0 ? 0 : (currPage - 1) * PAGE_SIZE + 1,
+    visibleEnd = Math.min(currPage * PAGE_SIZE, filteredData.length),
+    paginatedEmpData = filteredData.slice(startIndex, endIndex);
 
   const handlePagination = (value) => {
     setCurrPage(value);
@@ -236,7 +258,7 @@ export default function Employees() {
     setCurrPage((currPage) => currPage - 1);
   };
 
-  // export functionality
+  // export functionality - select emps records(one or many)
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
   // if the selected empids are present in the list remove them - works in case of Deselection and if they are not present add them - works in case of Selection.
@@ -270,6 +292,11 @@ export default function Employees() {
       ]);
     }
   };
+
+  // changing the currPage to 1 whenever there is a change in the filter.- suppose we are on page 2 and then filter records, in this case the paginatedEmpData becomes empty for that page.
+  useEffect(() => {
+    setCurrPage(1);
+  }, [selectedDept, selectedRole, selectedStatus]);
 
   return (
     <div className="employees-page">
@@ -315,7 +342,10 @@ export default function Employees() {
           </label>
           <label>
             <span className="visually-hidden">Filter by department</span>
-            <select defaultValue={departments[0]}>
+            <select
+              defaultValue={departments[0]}
+              onChange={(e) => setSelectedDept(e.target.value)}
+            >
               {departments.map((item, index) => {
                 return (
                   <option value={item} key={index}>
@@ -328,7 +358,10 @@ export default function Employees() {
 
           <label>
             <span className="visually-hidden">Filter by status</span>
-            <select defaultValue={statuses[0]}>
+            <select
+              defaultValue={statuses[0]}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+            >
               {statuses.map((item, index) => (
                 <option value={item} key={index}>
                   {item}
@@ -339,7 +372,10 @@ export default function Employees() {
 
           <label>
             <span className="visually-hidden">Filter by role</span>
-            <select defaultValue={roles[0]}>
+            <select
+              defaultValue={roles[0]}
+              onChange={(e) => setSelectedRole(e.target.value)}
+            >
               {roles.map((item, index) => (
                 <option value={item} key={index}>
                   {item}
@@ -354,7 +390,7 @@ export default function Employees() {
             <table className="employees-table">
               <thead>
                 <tr>
-                  {/* paginationEmpData.length > 0 : added this condition because of vacuous truth. i.e [].every(() => false) return true and even for an empty paginatedEmpData the below every condition will return true since there are no numbers that violate the condition*/}
+                  {/* paginationEmpData.length > 0 : added this condition because of vacuous truth. i.e [].every(() => false) return true and even for an empty paginatedEmpData the below every condition will return true since there are no numbers that violate the condition as a consequence even though we do not have any paginated data the checkbox on top header will be shown checked. */}
                   <th scope="col">
                     <input
                       type="checkbox"
@@ -402,7 +438,7 @@ export default function Employees() {
                     <td>
                       <span className="employee-status">{item.status}</span>
                     </td>
-                    <td>{item.hireData}</td>
+                    <td>{item.hireDate}</td>
                     <td>{item.manager}</td>
                     <td>
                       <div className="employee-row-actions">
@@ -437,8 +473,8 @@ export default function Employees() {
 
           <footer className="employees-pagination">
             <span className="employees-pagination-summary">
-              Showing {startIndex + 1}-{Math.min(endIndex, empDetails.length)}{" "}
-              of {empDetails.length} employees
+              Showing {visibleStart}-{visibleEnd} of {empDetails.length}{" "}
+              employees
             </span>
             <nav className="employees-pages" aria-label="Employee pages">
               <button
