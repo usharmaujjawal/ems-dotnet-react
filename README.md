@@ -385,6 +385,31 @@ EmpMgmtSystem.UI/
 └── vite.config.js
 ```
 
+### Employee Directory: Filtering, Searching, and Pagination
+
+The employee directory currently processes its in-memory employee list in this order:
+
+```text
+empDetails
+  → filteredData       (department, role, and status)
+  → searchedData       (search within filteredData)
+  → paginatedEmpData   (slice searchedData for the current page)
+  → render paginatedEmpData
+```
+
+In other words, filtering and searching happen before pagination. The page count and visible range are also derived from `searchedData`:
+
+```js
+const totalPages = Math.ceil(searchedData.length / PAGE_SIZE);
+const startIndex = (currPage - 1) * PAGE_SIZE;
+const endIndex = startIndex + PAGE_SIZE;
+const paginatedEmpData = searchedData.slice(startIndex, endIndex);
+```
+
+Render `paginatedEmpData` in the table. Use `searchedData.length` for the matching-result count in the pagination summary; using `empDetails.length` there reports the unfiltered total. Reset the current page when a filter or search term changes so the selected page remains valid.
+
+This is suitable for the current client-side sample data. For a production-sized directory, send the search term, filters, sort order, page, and page size to the API. The API should apply search and filters, calculate the matching total, sort consistently, and then return the requested page.
+
 ---
 
 ## 🛠️ Technology Stack

@@ -220,6 +220,7 @@ export default function Employees() {
   const [selectedDept, setSelectedDept] = useState(departments[0]);
   const [selectedRole, setSelectedRole] = useState(roles[0]);
   const [selectedStatus, setSelectedStatus] = useState(statuses[0]);
+  const [searchTerm, setSearchTerm] = useState(""); // for searching
 
   const filteredData =
     // adding an extra condition for "All department - in case of All Departments - return all the paginated records."
@@ -235,16 +236,28 @@ export default function Employees() {
       return deptMatch && roleMatch && statusMatch;
     });
 
+  // Searching
+  const searchedData = searchTerm
+    ? filteredData.filter(
+        (emp) =>
+          emp.name.toLowerCase().startsWith(searchTerm.toLowerCase()) ||
+          emp.empId
+            .toString()
+            .toLowerCase()
+            .startsWith(searchTerm.toString().toLowerCase()),
+      )
+    : filteredData;
+
   // pagination : is based on filtered data
   const [currPage, setCurrPage] = useState(1),
     PAGE_SIZE = 10,
     startIndex = (currPage - 1) * PAGE_SIZE,
     endIndex = startIndex + PAGE_SIZE,
-    totalPages = Math.ceil(filteredData.length / PAGE_SIZE),
+    totalPages = Math.ceil(searchedData.length / PAGE_SIZE),
     visibleStart =
-      filteredData.length === 0 ? 0 : (currPage - 1) * PAGE_SIZE + 1,
-    visibleEnd = Math.min(currPage * PAGE_SIZE, filteredData.length),
-    paginatedEmpData = filteredData.slice(startIndex, endIndex);
+      searchedData.length === 0 ? 0 : (currPage - 1) * PAGE_SIZE + 1,
+    visibleEnd = Math.min(currPage * PAGE_SIZE, searchedData.length),
+    paginatedEmpData = searchedData.slice(startIndex, endIndex);
 
   const handlePagination = (value) => {
     setCurrPage(value);
@@ -300,6 +313,11 @@ export default function Employees() {
     setCurrPage(1);
   }, [selectedDept, selectedRole, selectedStatus]);
 
+  // similary logic applies to searchedData as well
+  useEffect(() => {
+    setCurrPage(1);
+  }, [searchTerm]);
+
   return (
     <div className="employees-page">
       <header className="employees-header">
@@ -340,7 +358,11 @@ export default function Employees() {
         <section className="employees-toolbar" aria-label="Employee filters">
           <label className="employees-search">
             <span className="visually-hidden">Search employees</span>
-            <input type="search" placeholder="Search name, email, or code..." />
+            <input
+              type="search"
+              placeholder="Search name, email, or code..."
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </label>
           <label>
             <span className="visually-hidden">Filter by department</span>
@@ -475,7 +497,7 @@ export default function Employees() {
 
           <footer className="employees-pagination">
             <span className="employees-pagination-summary">
-              Showing {visibleStart}-{visibleEnd} of {empDetails.length}{" "}
+              Showing {visibleStart}-{visibleEnd} of {searchedData.length}{" "}
               employees
             </span>
             <nav className="employees-pages" aria-label="Employee pages">
